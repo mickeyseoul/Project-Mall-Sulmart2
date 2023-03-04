@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="alcohol.model.Alcohol">
+	
+	<!-- 카테고리 페이지 -->
+	<select id="GetAllAlCate" resultType="MyAlCate">
+		select * from alcategory 
+		order by num
+	</select>
+	
+	<insert id="InsertAlCate">
+		insert into alcategory 
+		values(alc_seq.nextval,#{cate})
+	</insert>
+	
+	<delete id="DeleteAlCate">
+		delete alcategory where num = #{num}
+	</delete>
+	
+	<!-- 0919 안주 카테고리 추가 -->
+	<select id="GetAllSnCate" resultType="alcohol.model.SnCateBean">
+		select * from sncategory 
+		order by cate1, cate2
+	</select>
+	
+	<select id="GetSnCate1" resultType="alcohol.model.SnCateBean">
+		select * from sncategory 
+		where cate1 = '건식' 
+		order by cate1, cate2
+	</select>
+	
+	<select id="GetSnCate2" resultType="alcohol.model.SnCateBean">
+		select * from sncategory 
+		where cate1 = '습식' 
+		order by cate1, cate2
+	</select>
+	
+	<select id="GetSnCate3" resultType="alcohol.model.SnCateBean">
+		select cate2 from sncategory 
+		order by cate2
+	</select>
+	
+	<insert id="InsertSnCate">
+		insert into sncategory 
+		values(snc_seq.nextval,#{cate1},#{cate2})
+	</insert>
+	
+	<delete id="DeleteSnCate">
+		delete sncategory where num = #{num}
+	</delete>
+	<!-- 여기까지 -->
+	
+	
+	<!-- 주류 리스트 페이지 -->
+	<!-- 변경 -->
+	<insert id="InsertAlcohol">
+		insert into alcohol(num,name,code,category,brand,country,price,point,stock,content,image,input_date,exp_date,contentImage,product)									
+		values(al_seq.nextval,#{name},al_seq.currval,#{category},#{brand},#{country},#{price},#{point},#{stock},#{content},#{image},#{input_date},#{exp_date},#{contentImage},1)
+	</insert>
+	<!-- 변경 -->
+	<select id="GetTotalCount1" resultType="int">
+		select count(*) from alcohol where product = 1 
+		<if test="whatColumn=='category'">
+			and category like #{keyword} and product = 1
+		</if>
+		<if test="whatColumn=='name'">
+			and name like #{keyword} and product = 1
+		</if>
+		<if test="whatColumn=='brand'">
+			and brand like #{keyword} and product = 1
+		</if>
+		<if test="whatColumn == 'content'">
+			and content like #{keyword} and product = 1
+		</if>
+	</select>
+	<!-- 변경 -->
+	<select id="GetAllAlcohol" resultType="MyAlcohol">
+		select * from alcohol where product = 1 
+		<if test="whatColumn=='category'">
+			and category like #{keyword}
+		</if>
+		<if test="whatColumn=='name'">
+			and name like #{keyword} and product = 1
+		</if>
+		<if test="whatColumn=='brand'">
+			and brand like #{keyword} and product = 1
+		</if>
+		<if test="whatColumn == 'content'">
+			and content like #{keyword} and product = 1
+		</if>
+		order by num desc
+	</select>
+	
+	<select id="GetAlcoholByNum" resultType="MyAlcohol">
+		select * from alcohol where num = #{num}
+	</select>
+	
+	<update id="UpdateAlcohol">
+		update alcohol set name=#{name}, category=#{category}, brand=#{brand}, country=#{country}, price=#{price}, point=#{point}, stock=#{stock}, spec=#{spec}, content=#{content}, 
+		image=#{image}, input_date=#{input_date}, exp_date=#{exp_date}, contentImage=#{contentImage} where num=#{num}
+	</update>
+	
+	<delete id="DeleteAlcohol">
+		delete alcohol where num = #{num}
+	</delete>
+	
+	
+	<!-- 메인 페이지 -->
+	<!-- 변경 -->
+	<select id="GetNewAlcohol" resultType="MyAlcohol">
+		select num, name, price, image from 
+		(select num, name, price, image, product, rank() over(order by num desc) rank from alcohol where product = 1) 
+		where rank between 1 and 4
+	</select>
+	
+	<!-- 0919 추가 -->
+	<select id="GetNewSnack" resultType="MyAlcohol">
+		select num, name, price, image from 
+		(select num, name, price, image, product, rank() over(order by num desc) rank from alcohol where product = 2 and appr = 1) 
+		where rank between 1 and 4
+	</select>
+	
+	<select id="GetAllProduct" resultType="MyAlcohol">
+		select * from alcohol where appr = 1
+		<if test="whatColumn=='category'">
+			and category like #{keyword}
+		</if>
+		<if test="whatColumn=='name'">
+			and name like #{keyword}
+		</if>
+		<if test="whatColumn=='brand'">
+			and brand like #{keyword}
+		</if>
+		<if test="whatColumn == 'content'">
+			and content like #{keyword}
+		</if>
+		<if test="whatColumn == 'whole'">
+			and category like #{keyword} or name like #{keyword} or brand like #{keyword} or content like #{keyword}
+		</if>
+	</select>
+	
+	<select id="GetAllSearchProduct" resultType="int">
+		select count(*) from alcohol where appr = 1 
+		and category like #{keyword} or name like #{keyword} or brand like #{keyword} or content like #{keyword}
+	</select>
+	
+	
+	<select id="GetTotalCount" resultType="int">
+		select count(*) from alcohol where appr = 1
+		<if test="whatColumn=='category'">
+			and category like #{keyword}
+		</if>
+		<if test="whatColumn=='name'">
+			and name like #{keyword}
+		</if>
+		<if test="whatColumn=='brand'">
+			and brand like #{keyword}
+		</if>
+		<if test="whatColumn == 'content'">
+			and content like #{keyword}
+		</if>
+		<if test="whatColumn == 'whole'">
+			and category like #{keyword} or name like #{keyword} or brand like #{keyword} or content like #{keyword}
+		</if>
+	</select>
+	<!-- 여기까지 -->
+	
+	
+	<!-- 0919 안주 추가 -->
+	<!-- 안주 리스트 페이지 -->
+	<insert id="InsertSnack">
+		insert into alcohol(num,name,code,category,brand,country,price,point,stock,content,image,input_date,exp_date,contentImage,product,memid,appr)									
+		values(al_seq.nextval,#{name},al_seq.currval,#{category},#{brand},#{country},#{price},#{point},#{stock},#{content},#{image},#{input_date},#{exp_date},#{contentImage},2,#{memid},0)
+	</insert>
+	
+	<select id="GetTotalCount2" resultType="int">
+		select count(*) from alcohol where product = 2 and appr = 1 
+		<if test="whatColumn=='category'">
+			and category like #{keyword}
+		</if>
+		<if test="whatColumn=='name'">
+			and name like #{keyword}
+		</if>
+		<if test="whatColumn=='brand'">
+			and brand like #{keyword}
+		</if>
+		<if test="whatColumn == 'content'">
+			and content like #{keyword}
+		</if>
+		<if test="whatColumn == 'memid'">
+			and memid like #{keyword}
+		</if>
+	</select>
+	
+	<select id="GetAllSnack" resultType="MyAlcohol">
+		select * from alcohol where product = 2  and appr = 1 
+		<if test="whatColumn=='category'">
+			and category like #{keyword}
+		</if>
+		<if test="whatColumn=='name'">
+			and name like #{keyword}
+		</if>
+		<if test="whatColumn=='brand'">
+			and brand like #{keyword}
+		</if>
+		<if test="whatColumn == 'content'">
+			and content like #{keyword}
+		</if>
+		<if test="whatColumn == 'memid'">
+			and memid like #{keyword}
+		</if>
+		order by num desc
+	</select>
+	
+	<select id="GetSnackByNum" resultType="MyAlcohol">
+		select * from alcohol where num = #{num}
+	</select>
+	
+	<update id="UpdateSnack">
+		update alcohol set name=#{name}, category=#{category}, brand=#{brand}, country=#{country}, price=#{price}, point=#{point}, stock=#{stock}, spec=#{spec}, content=#{content}, 
+		image=#{image}, input_date=#{input_date}, exp_date=#{exp_date}, contentImage=#{contentImage} where num=#{num}
+	</update>
+	
+	<delete id="DeleteSnack">
+		delete alcohol where num = #{num}
+	</delete>
+	<!-- 여기까지 -->
+	
+	
+	
+	<!-- 0926 판매자 추가 -->
+	<update id="UpdateSnackAppr">
+		update alcohol set appr = 1 where num = #{num}
+	</update>
+	
+	<select id="GetTotalCount2D" resultType="int">
+		select count(*) from alcohol where product = 2 and appr = 0 
+		<if test="whatColumn=='category'">
+			and category like #{keyword}
+		</if>
+		<if test="whatColumn=='name'">
+			and name like #{keyword}
+		</if>
+		<if test="whatColumn=='brand'">
+			and brand like #{keyword}
+		</if>
+		<if test="whatColumn == 'content'">
+			and content like #{keyword}
+		</if>
+		<if test="whatColumn == 'memid'">
+			and memid like #{keyword}
+		</if>
+	</select>
+	
+	<select id="GetAllSnackD" resultType="MyAlcohol">
+		select * from alcohol where product = 2  and appr = 0 
+		<if test="whatColumn=='category'">
+			and category like #{keyword}
+		</if>
+		<if test="whatColumn=='name'">
+			and name like #{keyword}
+		</if>
+		<if test="whatColumn=='brand'">
+			and brand like #{keyword}
+		</if>
+		<if test="whatColumn == 'content'">
+			and content like #{keyword}
+		</if>
+		<if test="whatColumn == 'memid'">
+			and memid like #{keyword}
+		</if>
+		order by num desc
+	</select>
+	
+	
+	
+	
+	
+	<!-- 혜인 -->
+	
+	<update id="UpdateStock">
+		update alcohol
+		set stock = stock - #{stock}
+		where num = #{num}	
+	</update>
+	
+  	<select id="GetOrderDetail" resultType="mall.cart.ShoppingInfo">
+		select o.num, a.name, a.price, o.qty, a.price*o.qty amount, a.image
+		from orderdetails o inner join alcohol a
+		on o.num = a.num and orderid = #{orderid}
+	</select> 
+	
+	<update id="UpdateStock2">
+		update alcohol
+		set stock = stock + #{stock}
+		where num = #{num}	
+	</update>
+	
+	<!-- 세은 -->
+	
+	<insert id="productInsert">
+		insert into alcohol
+		values(al_seq.nextval,#{name},#{code},
+		#{country},#{brand},#{price},
+		#{category,jdbcType=VARCHAR},
+		#{content},#{point},#{delivery}
+		#{qty},#{stock},#{spec},#{heart},#{image},
+		#{input_date},#{exp_date},#{delivery})
+	</insert>
+
+	<select id="GetAlcohol" resultType="MyAlcohol">
+		select * from alcohol
+		where num = #{num}
+		ORDER BY NUM DESC
+	</select>
+	
+	<select id="GetReview" resultType="MyReview">
+		select * from review	
+		where ref = #{ref}
+	</select>
+	
+	<insert id="replyInsert">
+		insert into review (num, title, content, writer, passwd, email, star, reg_date, ref, re_step, re_level, readcount, ip) 
+		values(al_seq.nextval, ' ', #{content}, #{writer}, ' ', ' ',  #{star}, #{reg_date}, #{ref}, 0, 0, 0 ,' ')
+	</insert>
+	
+	<update id="updateRecomm">
+		update review
+		set readcount = readcount + 1
+		where num = #{rid}
+	</update>
+	
+	<select id="selectRecomm" resultType="int">
+		select readcount from review	
+		where num = #{rid}
+	</select>
+	
+	<insert id="insertHeart" parameterType="hashmap">
+		insert into heart (mem_num, prod_num, heart_date)
+		values (#{memberId}, #{productId}, to_date(sysdate,'yyyy.mm.dd hh24:mi'))
+	</insert>
+	
+	<select id="checkHeart" resultType="int" parameterType="hashmap">
+		select distinct count(*) from heart
+        where mem_num = #{memberID}
+        and prod_num = #{productID}
+	</select>
+	
+	<select id="SelectCheckbuyFlag" parameterType="hashmap"
+      resultType="int">
+      select count(*)
+      from orders o
+      INNER JOIN orderdetails d
+      on
+      o.orderid = d.orderid
+      WHERE o.memid = #{memberID}
+      and d.num =
+      TO_NUMBER(#{productID})
+   </select>
+
+   <select id="CheckDuplecateReview" parameterType="hashmap"
+      resultType="int">
+      select distinct count(*) from review
+      where writer = #{memberID}
+      and ref =
+      TO_NUMBER(#{productID})
+   </select>
+
+   <update id="ReadUpdate">
+      update alcohol
+      set readcount = NVL(readcount, 0) + 1
+      where num = #{num}
+   </update>
+	
+	
+</mapper>

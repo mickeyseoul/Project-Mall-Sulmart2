@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//src/main/java/alcohol/controller/AlcoholDetailController.java=UTF-8
+encoding//src/main/java/alcohol/model/AlcoholDao.java=UTF-8
+encoding//src/main/java/mall/controller/MypageReviewController.java=UTF-8
+encoding//src/main/java/member/controller/MemberFindIdController.java=UTF-8
+encoding//src/main/java/member/controller/MemberFindPwController.java=UTF-8
+encoding//src/main/java/member/controller/MemberLoginController.java=UTF-8
+encoding//src/main/java/member/controller/MemberRegisterController.java=UTF-8
+encoding//src/main/java/member/controller/MemberUpdateController.java=UTF-8
+encoding//src/main/java/member/model/MemberBean.java=UTF-8
+encoding//src/main/java/member/model/MemberDao.java=UTF-8
+encoding//src/main/java/qna/controller/QnaWriteController.java=UTF-8
+encoding//src/main/webapp/start.jsp=UTF-8
+separateDerivedEncodings=true

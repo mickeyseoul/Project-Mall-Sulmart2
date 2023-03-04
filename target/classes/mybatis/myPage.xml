@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mall.model.Mypage">
+
+	<select id="myHeartList" resultType="MyHeartList"
+		parameterType="int">
+		select DISTINCT * from heart h
+		INNER JOIN alcohol a
+		ON
+		h.prod_num = a.num
+		where h.mem_num = #{memberId}
+
+	</select>
+
+	<select id="reviewStatus" parameterType="hashmap"
+		resultType="mall.model.ReviewStatusBean">
+		select distinct abs( (select count(*) from orders where
+		memid = #{memberID} )-(select count(*) from review where writer =
+		#{memberID})) as possible, (select count(*) from review where writer =
+		#{memberID}) AS complete from review
+	</select>
+
+	<select id="possibleReview" parameterType="hashmap"
+		resultType="mall.model.PossibleReviewBean">
+		select a.num, a.name, od.qty, a.image from orders o
+		INNER
+		JOIN orderdetails od
+		ON o.orderid = od.orderid
+		INNER JOIN alcohol a
+		ON
+		od.num = a.num
+		where o.memid = #{memberID}
+		AND od.num NOT IN (select REF from review where writer = #{memberID})
+	</select>
+
+	<select id="completeReview" parameterType="hashmap"
+		resultType="mall.model.CompleteReviewBean">
+		select a.num, a.name, od.qty, a.image from orders o
+		INNER JOIN
+		orderdetails od
+		ON o.orderid = od.orderid
+		INNER JOIN alcohol a
+		ON od.num =
+		a.num
+		INNER JOIN review r
+		ON r.ref = od.num
+		where o.memid = #{memberID}
+	</select>
+
+
+</mapper>

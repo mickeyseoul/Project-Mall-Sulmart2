@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="orderdetail.model.OrderDetail">
+	
+	<insert id="InsertData">
+		insert into orderdetails
+		values(seq_odid.nextval,#{orderid},#{num},#{qty})
+	</insert>
+	
+	<select id="SelectOrderDetail" resultType="orderdetail.model.OrderDetailBean">
+		select * from orderdetails
+		where orderid = #{orderid}
+	</select>
+
+	
+</mapper>
+
+<!-- orderdetail.xml -->

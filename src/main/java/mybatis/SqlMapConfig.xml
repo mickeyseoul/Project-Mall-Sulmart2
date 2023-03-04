@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="qna.model.QnaBean" alias="MyQna" />
+		<typeAlias type="qna.model.QcommentBean" alias="MyComment" />
+		<typeAlias type="notice.model.NoticeBean" alias="MyNotice" />
+		<typeAlias type="alcohol.model.AlcoholBean" alias="MyAlcohol" />
+		<typeAlias type="alcohol.model.AlCateBean" alias="MyAlCate" />
+		<typeAlias type="member.model.MemberBean" alias="MyMember" />
+		<typeAlias alias="MyOrder" type="order.model.OrderBean"/>
+		<typeAlias alias="MyReview" type="alcohol.model.ReviewBean"/>
+		<typeAlias alias="MyHeartList" type="mall.model.HeartListBean"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="mybatis/qna.xml" />
+		<mapper resource="mybatis/notice.xml" />
+		<mapper resource="mybatis/alcohol.xml" />
+		<mapper resource="mybatis/member.xml" />
+		<mapper resource="mybatis/order.xml"/>
+		<mapper resource="mybatis/orderdetail.xml"/>
+		<mapper resource="mybatis/review.xml"/>
+		<mapper resource="mybatis/myPage.xml"/>
+	</mappers>
+</configuration>
+
+<!-- SqlMapConfig.xml -->

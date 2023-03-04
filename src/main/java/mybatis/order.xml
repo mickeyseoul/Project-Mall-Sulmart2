@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="order.model.Order">
+
+		<select id="GetMaxOrderid" resultType="int">
+		select max(orderid) from orders
+	</select>
+	
+	<insert id="InsertData">
+		insert into orders
+		values(seq_oid.nextval,#{memid},default,sysdate)
+	</insert>
+	
+	<select id="SelectOrderMid" resultType="order.model.OrderBean">
+		select * from orders
+		where memid = #{memid}
+		order by orderid desc
+	</select>
+	
+	<!-- 박이랑 -->
+	<select id="GetAllOrderList" resultType="mall.cart.ShoppingInfo">
+		select o.orderid num, o.memid id, o.orderdate, o.orderState,o.qty, a.num, a.name, a.price, a.point, a.image, o.qty*a.price priceAmount 
+		from (select o.orderid, memid, orderdate, orderState, num, qty  
+		from orders o inner join orderdetails od
+		on o.orderid = od.orderid) o inner join alcohol a 
+		on o.num = a.num 
+		<if test="whatColumn == 'id'">
+			and o.memid like #{keyword}
+		</if>
+		<if test="whatColumn == 'orderid'">
+			and o.orderid like #{keyword}
+		</if>
+		<if test="whatColumn == 'month'">
+			and o.orderdate like #{keyword}
+		</if>
+		order by orderdate desc
+	</select>
+	
+	<select id="GetTotalCount" resultType="int">
+		select count(odid) from 
+		orders o inner join orderdetails od 
+		on o.orderid = od.orderid 
+		<if test="whatColumn == 'id'">
+			and memid like #{keyword}
+		</if>
+		<if test="whatColumn == 'orderid'">
+			and o.orderid like #{keyword}
+		</if>
+		<if test="whatColumn == 'month'">
+			and o.orderdate like #{keyword}
+		</if>
+	</select>
+	
+	<!-- 0927 -->
+	<select id="GetAllOrders" resultType="order.model.OrderBean">
+		select * from orders where orderdate like #{month} and orderState = '배송준비'
+	</select>
+	
+	<select id="GetAllOrderByMonth" resultType="mall.cart.ShoppingInfo">
+		select o.orderdate, o.orderState, o.num, o.qty, a.price, o.qty*a.price priceAmount 
+		from(select orderdate, orderState, num, qty 
+		from orders o inner join orderdetails  od
+		on o.orderid = od.orderid) o inner join alcohol a 
+		on o.num = a.num and o.orderdate like #{month} and o.orderState = '배송준비'
+	</select>
+	
+	
+	
+	
+	
+	<!-- 김혜인 -->
+	<update id="OrderCancle">
+		update orders
+		set orderState = '주문취소' 
+		where orderid = #{orderid}
+	</update>
+
+	<select id="GetOrder" resultType="order.model.OrderBean">	
+		select * from orders
+		where orderid = #{orderid}	
+	</select>
+	
+	<select id="GetOrderTotalCount" resultType="int"> 
+		select count(*) from orders
+	</select>
+	
+		<select id="GetMemberId" resultType="String">
+		select memid from orders
+		where orderid = #{orderid}
+	</select>
+	<select id="OrderComplete" resultType="String"> 
+		update orders
+		set orderState = '배송완료' 
+		where orderid = #{orderid}
+	</select>
+	
+</mapper>
+
+<!-- order.xml -->

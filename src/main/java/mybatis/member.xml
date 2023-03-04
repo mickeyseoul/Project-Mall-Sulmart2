@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member.model.Member">
+
+	<select id="GetTotalCount" resultType="int">
+		select count(*) from members
+		<if test="whatColumn=='name'">
+			where name like #{keyword}
+		</if>
+		<if test="whatColumn=='id'">
+			where id like #{keyword}
+		</if>
+		<if test="whatColumn=='seller'">
+			where seller like #{keyword}
+		</if>
+
+	</select>
+
+	<select id="GetMemberList" resultType="MyMember">
+		select * from members
+		<if test="whatColumn == 'name'">
+			where name like #{keyword}
+		</if>
+		<if test="whatColumn == 'id'">
+			where id like #{keyword}
+		</if>
+		<if test="whatColumn=='seller'">
+			where seller like #{keyword}
+		</if>
+
+
+	</select>
+	<select id="GetMember" resultType="MyMember">
+		select * from members
+		where id
+		= #{id}
+	</select>
+	
+	<select id="Pwcheck" resultType="MyMember">
+		select count(*) from members
+		where password
+		= #{password}
+	</select>
+
+	<select id="GetMemberDetail" resultType="MyMember">
+		select * from members
+		where id = #{id}
+	</select>
+
+	<insert id="RegisterMember">
+		insert into members
+		(num,name,id,password,email1,email2,rrn1,rrn2,rrn3,hp1,hp2,hp3,zipcode1,zipcode2,zipcode3,zipcode4,seller)
+		values(mseq.nextval,#{name},#{id},#{password},#{email1},#{email2},#{rrn1,jdbcType=VARCHAR},#{rrn2,jdbcType=VARCHAR},#{rrn3,jdbcType=VARCHAR},#{hp1,jdbcType=VARCHAR},#{hp2,jdbcType=VARCHAR},#{hp3,jdbcType=VARCHAR},#{zipcode1},#{zipcode2},#{zipcode3},#{zipcode4},#{seller})
+	</insert>
+
+	<update id="UpdateMember">
+		update members set
+		name=#{name},id=#{id},password=#{password},
+		email1=#{email1},email2=#{email2},rrn1=#{rrn1},rrn2=#{rrn2},rrn3=#{rrn3},hp1=#{hp1},hp2=#{hp2},
+		hp3=#{hp3},zipcode1=#{zipcode1},zipcode2=#{zipcode2},zipcode3=#{zipcode3},zipcode4=#{zipcode4}
+		where num=#{num}
+	</update>
+
+	<select id="IdCheck" resultType="int">
+		select count(*) from members
+		where id=#{id}
+	</select>
+
+	<delete id="DeleteMember">
+		delete members where num =#{num}
+	</delete>
+	
+	<select id="GetMemberById" resultType="String">
+		select id from members
+		where name=#{name} and email1=#{email1}
+	</select>
+	
+	<select id="GetMemberByPw" resultType="String">
+		select password from members
+		where id=#{id} and email1=#{email1}
+	</select>
+	
+	
+	<update id="UpdateMpoint">
+		update members
+		set mpoint = mpoint + #{mpoint}
+		where id = #{id} 
+	</update>
+
+	<update id="UpdateMpoint2">
+		update members
+		set mpoint = mpoint - #{mpoint}
+		where id = #{id} 
+	</update>
+	
+	
+	<!-- 박이랑 -->   
+	<select id="GetSellerTotalCount" resultType="int">
+		select count(*) from members where seller = 1 
+		<if test="whatColumn=='name'">
+			and name like #{keyword}
+		</if>
+		<if test="whatColumn=='id'">
+			and id like #{keyword}
+		</if>
+	</select>
+	
+	<select id="GetAllSeller" resultType="MyMember">
+		select * from members where seller = 1 
+		<if test="whatColumn == 'name'">
+			and name like #{keyword}
+		</if>
+		<if test="whatColumn == 'id'">
+			and id like #{keyword}
+		</if>
+	</select>
+	
+	<select id="GetSaleItems" resultType="int">
+		select count(*) 
+		from alcohol a inner join members m
+		on a.memid = m.id and memid = #{id}
+	</select>
+	
+</mapper>
+
