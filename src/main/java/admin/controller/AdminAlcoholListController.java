@@ -23,48 +23,48 @@ import utility.Paging;
 
 @Controller
 public class AdminAlcoholListController {
-	
+
 	private final String command = "/alcoholList.ad";
 	private String getPage = "/alcoholList";
-	
+
 	@Autowired
 	private AlcoholDao alcoholDao;
-	
+
 	@Autowired
 	private AlCateDao alCateDao;
-	
+
 	@RequestMapping(command)
 	public String list(Model model, HttpServletRequest request,
-					@RequestParam(value="pageNumber", required = false) String pageNumber,
-					@RequestParam(value="whatColumn", required = false) String whatColumn,
-					@RequestParam(value="keyword", required = false) String keyword) {
-		
-		//°Ë»ö¾î
+			@RequestParam(value="pageNumber", required = false) String pageNumber,
+			@RequestParam(value="whatColumn", required = false) String whatColumn,
+			@RequestParam(value="keyword", required = false) String keyword) {
+
+		//ê²€ìƒ‰ì–´
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("whatColumn", whatColumn);
 		map.put("keyword", "%"+keyword+"%");
 		//System.out.println("whatColumn "+whatColumn);
 		//System.out.println("keyword "+keyword);
-		
-		//ÆäÀÌÂ¡
+
+		//í˜ì´ì§•
 		int totalCount = alcoholDao.getTotalCount1(map);
 		String url = request.getContextPath()+"/"+command;
-		
+
 		Paging pageInfo = new Paging(pageNumber,"5",totalCount,url,whatColumn,keyword,null);
-		
-		//ÁÖ·ù ¸®½ºÆ® °¡Á®¿À±â
+
+		//ì£¼ë¥˜ ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
 		List<AlcoholBean> lists = new ArrayList<AlcoholBean>();
 		lists = alcoholDao.getAllAlcohol(map,pageInfo);
-		
-		//ÁÖ·ù Ä«Å×°í¸® °¡Á®¿À±â
+
+		//ì£¼ë¥˜ ì¹´í…Œê³ ë¦¬ ê°€ì ¸ì˜¤ê¸°
 		List<AlCateBean> lists2 = new ArrayList<AlCateBean>();
 		lists2 = alCateDao.getAllAlCate();
-		
+
 		model.addAttribute("lists", lists);
 		model.addAttribute("lists2", lists2);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("totalCount", totalCount);
-		
+
 		return getPage;
 	}
 

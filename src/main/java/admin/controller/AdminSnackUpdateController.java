@@ -24,32 +24,32 @@ import alcohol.model.SnCateDao;
 
 @Controller
 public class AdminSnackUpdateController {
-	
+
 	private final String command = "/updateSnack.ad";
 	private String getPage = "/updateSnackForm";
 	private String gotoPage = "redirect:/snackList.ad";
-	
+
 	@Autowired
 	private AlcoholDao alcoholDao;
-	
+
 	@Autowired
 	private SnCateDao snCateDao;
-	
+
 	@Autowired
 	ServletContext application;
-	
-	//1 Æû Ã¤¿ö³Ö±â ÀÛ¾÷
+
+	//1 í¼ ì±„ì›Œë„£ê¸° ì‘ì—…
 	@RequestMapping(value=command, method = RequestMethod.GET)
 	public String update(@RequestParam("num") String num, Model model) {
 		System.out.println("AdminAlcoholUpdateController");
 		//System.out.println("num "+num);
-		
+
 		AlcoholBean alcohol = alcoholDao.getAlcoholByNum(num);
-		
-		//Ä«Å×°í¸® ÀÛ¾÷
+
+		//ì¹´í…Œê³ ë¦¬ ì‘ì—…
 		List<SnCateBean> lists2 = new ArrayList<SnCateBean>();
 		lists2 = snCateDao.getAllSnCate();
-						
+
 		List<AlcoholBean> lists3 = new ArrayList<AlcoholBean>();
 		for(SnCateBean x : lists2) {
 			AlcoholBean snCate = new AlcoholBean();
@@ -57,29 +57,29 @@ public class AdminSnackUpdateController {
 			category += x.getCate1()+"-"+x.getCate2();
 			snCate.setCategory(category);
 			lists3.add(snCate);
-				}
-		
+		}
+
 		model.addAttribute("alcohol", alcohol);
 		model.addAttribute("lists3", lists3);
-		
+
 		return getPage;
 	}
-	
-	//2 ¼öÁ¤ ÀÛ¾÷
+
+	//2 ìˆ˜ì • ì‘ì—…
 	@RequestMapping(value=command, method = RequestMethod.POST)
 	public String update(AlcoholBean alcohol,
-						@RequestParam("originImg") String originImg,
-						@RequestParam("originImg2") String originImg2) {
-		
-		//1 ±âÁ¸ ÀÌ¹ÌÁö »èÁ¦
-		String path = application.getRealPath("/resources");
+			@RequestParam("originImg") String originImg,
+			@RequestParam("originImg2") String originImg2) {
+
+		//1 ê¸°ì¡´ ì´ë¯¸ì§€ ì‚­ì œ
+		String path = application.getRealPath("/resources/images/alcohol");
 		//System.out.println(path);
 		File delFile = new File(path+"/"+originImg);
 		File delFile2 = new File(path+"/"+originImg2);
 		delFile.delete();
 		delFile2.delete();
-		
-		//2 »õ·Î¿î ÀÌ¹ÌÁö µî·Ï
+
+		//2 ìƒˆë¡œìš´ ì´ë¯¸ì§€ ë“±ë¡
 		MultipartFile multi = alcohol.getUpload();
 		MultipartFile multi2 = alcohol.getUpload2();
 		File file = new File(path+"/"+multi.getOriginalFilename());
@@ -94,10 +94,10 @@ public class AdminSnackUpdateController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-		
+
+
 		alcoholDao.updateAlcohol(alcohol);
-		
+
 		return gotoPage;
 	}
 

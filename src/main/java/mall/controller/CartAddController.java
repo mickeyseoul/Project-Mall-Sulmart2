@@ -21,72 +21,72 @@ public class CartAddController {
 	private final String command ="add.mall";
 	private String getPage ="/mallList";
 	private String gotoPage ="redirect:/list.mall";
-	
+
 	@RequestMapping(value=command, method=RequestMethod.GET)
 	public String add(@RequestParam(value="pageNumber",required = false) String pageNumber,
-						HttpServletResponse response,
-						Model model,
-						HttpSession session) throws IOException{
+			HttpServletResponse response,
+			Model model,
+			HttpSession session) throws IOException{
 
-			response.setContentType("text/html; charset=UTF-8");//response ÀÀ´äÀ» º¸³»¾ß ÇÑ´Ù //³»º¸³»´Â µ¥ÀÌÅÍ¿¡ ÇÑ±ÛÃ³¸®
-			PrintWriter writer = response.getWriter(); //writer¿¬°á´Ù¸®¸¦ Å¸°í °¡¼­ Ãâ·Â	  
-		
-			if(session.getAttribute("loginInfo") == null) { //·Î±×ÀÎ ¾ÈÇßÀ¸¸é 
-				//session.setAttribute("destination", "redirect:/main.mall"); 
-				writer.println("<script> alert('·Î±×ÀÎ ÈÄ ÀÌ¿ë°¡´ÉÇÕ´Ï´Ù');  history.go(-1);  </script>");
-				writer.flush(); //alertÀ» ³»º¸³»¶ó´Â ¶æ 
+		response.setContentType("text/html; charset=UTF-8");//response ì‘ë‹µì„ ë³´ë‚´ì•¼ í•œë‹¤ //ë‚´ë³´ë‚´ëŠ” ë°ì´í„°ì— í•œê¸€ì²˜ë¦¬
+		PrintWriter writer = response.getWriter(); //writerì—°ê²°ë‹¤ë¦¬ë¥¼ íƒ€ê³  ê°€ì„œ ì¶œë ¥	  
+
+		if(session.getAttribute("loginInfo") == null) { //ë¡œê·¸ì¸ ì•ˆí–ˆìœ¼ë©´ 
+			//session.setAttribute("destination", "redirect:/main.mall"); 
+			writer.println("<script> alert('ë¡œê·¸ì¸ í›„ ì´ìš©ê°€ëŠ¥í•©ë‹ˆë‹¤.');  history.go(-1);  </script>");
+			writer.flush(); //alertì„ ë‚´ë³´ë‚´ë¼ëŠ” ëœ» 
 			return "redirect:/login.mem";
 		} else {
-				MyCartList mycart = (MyCartList) session.getAttribute("mycart");
-				System.out.println("mycart:"+mycart);
-				
-				if(mycart == null) {
-					mycart = new MyCartList();
-				}
-				
-				session.setAttribute("mycart", mycart);
-
-			return gotoPage;
-		}
-	}
-	
-	//»ó¼¼º¸±â.jsp¿¡¼­ add.mall¿äÃ» , »óÇ°¹øÈ£, ÆäÀÌÁö¹øÈ£, ÁÖ¹®¼ö·®-¾ø¾î¼­ bean¿¡ ¸¸µê.
-	@RequestMapping(command)
-	public String add(AlcoholBean alcohol,
-						@RequestParam(value="pageNumber",required = false) String pageNumber,
-						HttpSession session) { //setNum, setOderqty
-		System.out.println("alcohol.getNum : "+alcohol.getNum());
-		System.out.println("alcohol.getOrderqty : "+alcohol.getOrderqty()); //µğÅ×ÀÏ¿¡¼­ °¡Á®¿À±â
-		System.out.println("cartAddCon/image:"+alcohol.getImage()); //ÆÄÀÏ¸í ÃÊ·Ï.jpg
-		
-		int num = Integer.valueOf(alcohol.getNum());
-		int oqty = alcohol.getOrderqty();
-		
-	
-		//·Î±×ÀÎ¾ÈÇØµµ »ó¼¼º¸±â µé¾î°¥¼öÀÖÁö¸¸ ÁÖ¹®Àº ·Î±×ÀÎÀ» ÇØ¾ß µé¾î°¥¼öÀÖ°Ô ¸¸µé°í ½Í´Ù. 
-		if(session.getAttribute("loginInfo") == null) { //·Î±×ÀÎ ¾ÈÇßÀ¸¸é 
-			session.setAttribute("destination", "redirect:/detail.al?num="+alcohol.getNum()+"&pageNumber="+pageNumber); 
-			//³Ñ¾î¿À´Â °ªÀÌ ÀÖ¾î¾ß ÇØ¼­ »ó¼¼º¸±â·Î °¡±â! ¹øÈ£¿Í ÆäÀÌÁö³Ñ¹ö¸¦ ³Ñ°ÜÁà¾ß ÀÌÀüÀÇ »ó¼¼º¸±â·Î °£´Ù.
-			return "redirect:/login.mem";
-		}
-		else { //·Î±×ÀÎ ÇßÀ¸¸é
-			//*¹ø»óÇ° *°³ ´ãÀ» Àå¹Ù±¸´Ï°¡ ÇÊ¿ä, + ÇÏ³ªÀÇ Àå¹Ù±¸´Ï¿¡ ¿©·¯»óÇ° ´ã¾Æ¾ßÇÑ´Ù.ÇÏ³ª¸¸µé¸é °è¼Ó °¡Áö°í ´Ù´Ò°Å´Ù.
 			MyCartList mycart = (MyCartList) session.getAttribute("mycart");
 			System.out.println("mycart:"+mycart);
-			
+
 			if(mycart == null) {
 				mycart = new MyCartList();
 			}
-	
+
+			session.setAttribute("mycart", mycart);
+
+			return gotoPage;
+		}
+	}
+
+	//ìƒì„¸ë³´ê¸°.jspì—ì„œ add.mallìš”ì²­ , ìƒí’ˆë²ˆí˜¸, í˜ì´ì§€ë²ˆí˜¸, ì£¼ë¬¸ìˆ˜ëŸ‰-ì—†ì–´ì„œ beanì— ë§Œë“¦.
+	@RequestMapping(command)
+	public String add(AlcoholBean alcohol,
+			@RequestParam(value="pageNumber",required = false) String pageNumber,
+			HttpSession session) { //setNum, setOderqty
+		System.out.println("alcohol.getNum : "+alcohol.getNum());
+		System.out.println("alcohol.getOrderqty : "+alcohol.getOrderqty()); //ë””í…Œì¼ì—ì„œ ê°€ì ¸ì˜¤ê¸°
+		System.out.println("cartAddCon/image:"+alcohol.getImage()); //íŒŒì¼ëª… ì´ˆë¡.jpg
+
+		int num = Integer.valueOf(alcohol.getNum());
+		int oqty = alcohol.getOrderqty();
+
+
+		//ë¡œê·¸ì¸ì•ˆí•´ë„ ìƒì„¸ë³´ê¸° ë“¤ì–´ê°ˆìˆ˜ìˆì§€ë§Œ ì£¼ë¬¸ì€ ë¡œê·¸ì¸ì„ í•´ì•¼ ë“¤ì–´ê°ˆìˆ˜ìˆê²Œ ë§Œë“¤ê³  ì‹¶ë‹¤. 
+		if(session.getAttribute("loginInfo") == null) { //ë¡œê·¸ì¸ ì•ˆí–ˆìœ¼ë©´ 
+			session.setAttribute("destination", "redirect:/detail.al?num="+alcohol.getNum()+"&pageNumber="+pageNumber); 
+			//ë„˜ì–´ì˜¤ëŠ” ê°’ì´ ìˆì–´ì•¼ í•´ì„œ ìƒì„¸ë³´ê¸°ë¡œ ê°€ê¸°! ë²ˆí˜¸ì™€ í˜ì´ì§€ë„˜ë²„ë¥¼ ë„˜ê²¨ì¤˜ì•¼ ì´ì „ì˜ ìƒì„¸ë³´ê¸°ë¡œ ê°„ë‹¤.
+			return "redirect:/login.mem";
+		}
+		else { //ë¡œê·¸ì¸ í–ˆìœ¼ë©´
+			//*ë²ˆìƒí’ˆ *ê°œ ë‹´ì„ ì¥ë°”êµ¬ë‹ˆê°€ í•„ìš”, + í•˜ë‚˜ì˜ ì¥ë°”êµ¬ë‹ˆì— ì—¬ëŸ¬ìƒí’ˆ ë‹´ì•„ì•¼í•œë‹¤.í•˜ë‚˜ë§Œë“¤ë©´ ê³„ì† ê°€ì§€ê³  ë‹¤ë‹ê±°ë‹¤.
+			MyCartList mycart = (MyCartList) session.getAttribute("mycart");
+			System.out.println("mycart:"+mycart);
+
+			if(mycart == null) {
+				mycart = new MyCartList();
+			}
+
 			mycart.addOrder(num, oqty);			
-			
+
 			session.setAttribute("mycart", mycart);
 			return gotoPage;
 		}
-		
-		
+
+
 	}
-	
-	
-	
+
+
+
 }

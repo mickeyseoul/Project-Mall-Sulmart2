@@ -36,58 +36,58 @@ public class AdminAlcoholUpdateController {
 	@Autowired
 	ServletContext application;
 	
-	//1 Æû Ã¤¿ö³Ö±â ÀÛ¾÷
-	@RequestMapping(value=command, method = RequestMethod.GET)
-	public String update(@RequestParam("num") String num, Model model) {
-		System.out.println("AdminAlcoholUpdateController");
-		//System.out.println("num "+num);
-		
-		AlcoholBean alcohol = alcoholDao.getAlcoholByNum(num);
-		
-		//Ä«Å×°í¸® °¡Á®¿À±â
-		List<AlCateBean> lists = new ArrayList<AlCateBean>();
-		lists = alCateDao.getAllAlCate();
-		
-		model.addAttribute("alcohol", alcohol);
-		model.addAttribute("lists", lists);
-		
-		return getPage;
-	}
-	
-	//2 ¼öÁ¤ ÀÛ¾÷
-	@RequestMapping(value=command, method = RequestMethod.POST)
-	public String update(AlcoholBean alcohol,
-						@RequestParam("originImg") String originImg,
-						@RequestParam("originImg2") String originImg2) {
-		
-		//1 ±âÁ¸ ÀÌ¹ÌÁö »èÁ¦
-		String path = application.getRealPath("/resources");
-		//System.out.println(path);
-		File delFile = new File(path+"/"+originImg);
-		File delFile2 = new File(path+"/"+originImg2);
-		delFile.delete();
-		delFile2.delete();
-		
-		//2 »õ·Î¿î ÀÌ¹ÌÁö µî·Ï
-		MultipartFile multi = alcohol.getUpload();
-		MultipartFile multi2 = alcohol.getUpload2();
-		File file = new File(path+"/"+multi.getOriginalFilename());
-		File file2 = new File(path+"/"+multi2.getOriginalFilename());
-		try {
-			multi.transferTo(file);
-			multi2.transferTo(file2);
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	//1 í¼ ì±„ì›Œë„£ê¸° ì‘ì—…
+		@RequestMapping(value=command, method = RequestMethod.GET)
+		public String update(@RequestParam("num") String num, Model model) {
+			System.out.println("AdminAlcoholUpdateController");
+			//System.out.println("num "+num);
+			
+			AlcoholBean alcohol = alcoholDao.getAlcoholByNum(num);
+			
+			//ì¹´í…Œê³ ë¦¬ ê°€ì ¸ì˜¤ê¸°
+			List<AlCateBean> lists = new ArrayList<AlCateBean>();
+			lists = alCateDao.getAllAlCate();
+			
+			model.addAttribute("alcohol", alcohol);
+			model.addAttribute("lists", lists);
+			
+			return getPage;
 		}
-	
 		
-		alcoholDao.updateAlcohol(alcohol);
+		//2 ìˆ˜ì • ì‘ì—…
+		@RequestMapping(value=command, method = RequestMethod.POST)
+		public String update(AlcoholBean alcohol,
+							@RequestParam("originImg") String originImg,
+							@RequestParam("originImg2") String originImg2) {
+			
+			//1 ê¸°ì¡´ ì´ë¯¸ì§€ ì‚­ì œ
+			String path = application.getRealPath("/resources/images/alcohol");
+			//System.out.println(path);
+			File delFile = new File(path+"/"+originImg);
+			File delFile2 = new File(path+"/"+originImg2);
+			delFile.delete();
+			delFile2.delete();
+			
+			//2 ìƒˆë¡œìš´ ì´ë¯¸ì§€ ë“±ë¡
+			MultipartFile multi = alcohol.getUpload();
+			MultipartFile multi2 = alcohol.getUpload2();
+			File file = new File(path+"/"+multi.getOriginalFilename());
+			File file2 = new File(path+"/"+multi2.getOriginalFilename());
+			try {
+				multi.transferTo(file);
+				multi2.transferTo(file2);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
-		return gotoPage;
+			
+			alcoholDao.updateAlcohol(alcohol);
+			
+			return gotoPage;
 	}
 
 }

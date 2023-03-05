@@ -27,9 +27,8 @@ public class AdminAlcoholDeleteController {
 	@RequestMapping(command)
 	public String delete(@RequestParam("num") String num) {
 		
-		//파일 삭제
 		AlcoholBean snack = alcoholDao.getAlcoholByNum(num);
-		String path = application.getRealPath("/resources");
+		String path = application.getRealPath("/resources/images/alcohol");
 		File delFile = new File(path+"/"+snack.getImage());
 		File delFile2 = new File(path+"/"+snack.getContentImage());
 		delFile.delete();

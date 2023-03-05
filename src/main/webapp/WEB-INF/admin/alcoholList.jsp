@@ -122,7 +122,7 @@
 		</c:if>	
 			<tr style="font-size: 10pt; font-weight: bold;">
 				<td rowspan="4"><img
-					src="<%= request.getContextPath() %>/resources/${ alcohol.image }"
+					src="<%= request.getContextPath() %>/resources/images/alcohol/${ alcohol.image }"
 					width="100" height="100"></td>
 				<td>상품코드</td>
 				<td colspan="3">상품명</td>

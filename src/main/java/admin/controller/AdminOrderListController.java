@@ -36,15 +36,15 @@ public class AdminOrderListController {
 					HttpServletRequest request, Model model) {
 		/*
 		OrderBean
-		private int orderid; //ÁÖ¹®(¼ÛÀå)¹øÈ£
-		private String memid; //È¸¿ø¹øÈ£
-		private String orderdate; //ÁÖ¹® ÀÏÀÚ
+		private int orderid; //ì£¼ë¬¸(ì†¡ì¥)ë²ˆí˜¸
+		private String memid; //íšŒì›ë²ˆí˜¸
+		private String orderdate; //ì£¼ë¬¸ ì¼ì
 		
 		OrderDetailBean
-		private int odid; // ¼ıÀÚ
-		private int orderid; // ÁÖ¹®¹øÈ£
-		private int num;  // »óÇ°¹øÈ£
-		private int qty; //ÁÖ¹® ¼ö·®
+		private int odid; // ìˆ«ì
+		private int orderid; // ì£¼ë¬¸ë²ˆí˜¸
+		private int num;  // ìƒí’ˆë²ˆí˜¸
+		private int qty; //ì£¼ë¬¸ ìˆ˜ëŸ‰
 		
 		ShoppingInfo
 		private int num;
@@ -58,13 +58,13 @@ public class AdminOrderListController {
 	    private int priceAmount; 
 		*/
 		
-		//jsp¿¡ jstl whatColumn/keyword°ª ¿¡·¯ ¹æÁö
+		//jspì— jstl whatColumn/keywordê°’ ì—ëŸ¬ ë°©ì§€
 		if(whatColumn.equals("1")) {
 			whatColumn = "";
 			keyword = "";
 		}
 		
-		//¿ùº° Á¶È¸
+		//ì›”ë³„ ì¡°íšŒ
 		SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd");
 		Date currentTime = new Date();
 		String date = format.format(currentTime);
@@ -87,7 +87,7 @@ public class AdminOrderListController {
 		
 		String url = request.getContextPath()+"/"+command;
 		
-		//´Ù½Ã Á¤»óÀûÀÎ ¿ù ¼ıÀÚ·Î ¾È¹Ù²ãÁÖ¸é ÆäÀÌÂ¡¿¡ ¿µÇâÀÌÀÖÀ½^^
+		//ë‹¤ì‹œ ì •ìƒì ì¸ ì›” ìˆ«ìë¡œ ì•ˆë°”ê¿”ì£¼ë©´ í˜ì´ì§•ì— ì˜í–¥ì´ìˆìŒ^^
 		if(whatColumn.equals("month")) {
 			keyword = origin;
 		}

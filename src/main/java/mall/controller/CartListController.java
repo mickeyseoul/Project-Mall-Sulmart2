@@ -44,13 +44,8 @@ public class CartListController {
 		int finalPrice= 0 ;
 		int deliveryCost =0;
 
-		//���̶� �߰�
 		String productNum = "";
 		for(Integer num : keylist) {
-
-			if(productNum.equals("")) {
-				productNum = String.valueOf(num);
-			}
 
 			AlcoholBean alcohol = alcoholDao.getAlcoholByNum(String.valueOf(num)); //
 
@@ -81,10 +76,14 @@ public class CartListController {
 
 			finalPrice = totalPriceAmount+deliveryCost; // -totalPointAmount
 			shopLists.add(shopInfo);
+			productNum = String.valueOf(num);
 		}
-
-		System.out.println("CartListController");
-		System.out.println("productNum "+productNum);
+		
+		
+		
+		//박이랑 추가
+		//System.out.println("CartListController");
+		//System.out.println("productNum "+productNum); // 장바구니의 맨 마지막 상품에 대한 상품 추천
 
 		//장바구니 상품 추천
 		if( ! productNum.equals("")) {

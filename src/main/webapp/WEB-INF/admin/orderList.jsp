@@ -44,7 +44,7 @@
 		<%-- ${ list.orderdate } --%>
 		</td>
 		<td>${ list.id }</td>
-		<td><img src="<%= request.getContextPath()%>/resources/${ list.image }" width="50" height="50"></td>
+		<td><img src="<%= request.getContextPath()%>/resources/images/alcohol/${ list.image }" width="50" height="50"></td>
 		<td>${ list.name }</td>
 		<td><fmt:formatNumber pattern="###,###" value="${ list.price }"/>원</td>
 		<td>${ list.qty }</td>

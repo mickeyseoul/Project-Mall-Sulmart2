@@ -34,7 +34,7 @@
 	
 		<c:forEach var="alcohol" items="${ myDlists }" varStatus="i">
 			<tr>
-				<td><img src="<%= request.getContextPath() %>/resources/${ alcohol.image }"
+				<td><img src="<%= request.getContextPath() %>/resources/images/alcohol/${ alcohol.image }"
 						width="50" height="50"></td>
 				<td>${ alcohol.name }</td>
 				<td>${ alcohol.category }</td>
@@ -93,7 +93,7 @@
 			</tr>
 			<tr>
 				<td rowspan="3">
-					<img src="<%= request.getContextPath() %>/resources/${ alcohol.image }"
+					<img src="<%= request.getContextPath() %>/resources/images/alcohol/${ alcohol.image }"
 						width="100" height="100">
 				</td>
 				<td>${ alcohol.code }</td>

@@ -5,21 +5,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class AlcoholBean {
 	private String image;
-	private String contentImage;
 	private MultipartFile upload;
-	private MultipartFile upload2;
 	
 	public String getImage() {
 		return image;
 	}
 	public void setImage(String image) {
 		this.image = image;
-	}
-	public String getContentImage() {
-		return contentImage;
-	}
-	public void setContentImage(String contentImage) {
-		this.contentImage = contentImage;
 	}
 	public MultipartFile getUpload() {
 		return upload;
@@ -28,6 +20,17 @@ public class AlcoholBean {
 		this.upload = upload;
 		this.image = upload.getOriginalFilename();
 	}
+	
+	private String contentImage;
+	private MultipartFile upload2;
+	
+	public String getContentImage() {
+		return contentImage;
+	}
+	public void setContentImage(String contentImage) {
+		this.contentImage = contentImage;
+	}
+	
 	public MultipartFile getUpload2() {
 		return upload2;
 	}
@@ -37,29 +40,29 @@ public class AlcoholBean {
 	}	
 	
 	private String num;	
-	@NotEmpty(message = "»óÇ°¸í ´©¶ô")
+	@NotEmpty(message = "ìƒí’ˆëª… ëˆ„ë½")
 	private String name;	
 	private String product;
 	private String code;
-	@NotEmpty(message = "Ä«Å×°í¸® ´©¶ô")
-	private String category;//¼±ÅÃÇÑ Ä«Å×°í¸®
+	@NotEmpty(message = "ì¹´í…Œê³ ë¦¬ ëˆ„ë½")
+	private String category;//ì„ íƒí•œ ì¹´í…Œê³ ë¦¬
 	private String brand;	
 	private String country;	
 	private String price;	
 	private String point;	
-	private String qty; //¼ö·®		
-	private String stock; //Àç°í¼ö·®		
-	private String spec; //º£½ºÆ®¼¿·¯,½ºÅ×µğ¼¿·¯		
+	private String qty; //ìˆ˜ëŸ‰		
+	private String stock; //ì¬ê³ ìˆ˜ëŸ‰		
+	private String spec; //ë² ìŠ¤íŠ¸ì…€ëŸ¬,ìŠ¤í…Œë””ì…€ëŸ¬		
 	private String heart;		
-	private String content; //¼³¸í			
+	private String content; //ì„¤ëª…			
 	private String input_date;	
-	private String exp_date; //À¯Åë±âÇÑ		
+	private String exp_date; //ìœ í†µê¸°í•œ		
 	private String delivery;
 	
-	private int orderqty;  //»õ·Î¸¸À½ ÁÖ¹®¼ö·® À§ÇØ
-	private boolean flag; //»õ·Î¸¸µë À¯Åë±âÇÑ Ã¼Å©À§ÇØ
-	private String memid; //»õ·Î¸¸µë ÆÇ¸ÅÀÚid
-	private int appr; //»õ·Î¸¸µë ÆÇ¸ÅÀÚ ½ÂÀÎ¿©ºÎ
+	private int orderqty;  //ìƒˆë¡œë§ŒìŒ ì£¼ë¬¸ìˆ˜ëŸ‰ ìœ„í•´
+	private boolean flag; //ìƒˆë¡œë§Œë“¬ ìœ í†µê¸°í•œ ì²´í¬ìœ„í•´
+	private String memid; //ìƒˆë¡œë§Œë“¬ íŒë§¤ìid
+	private int appr; //ìƒˆë¡œë§Œë“¬ íŒë§¤ì ìŠ¹ì¸ì—¬ë¶€
 	
 	private Integer readcount;
 	

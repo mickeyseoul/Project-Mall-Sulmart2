@@ -12,29 +12,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MypageController {
-	
+
 	private final String command = "/myPage.mall";
 	private String getPage = "/myPage";
 	//private String gotoPage ="redirect:/order.mall";
 	//private String gotoPage ="/shopList";
-	
+
 	@RequestMapping(command)
 	public String mypage(HttpServletResponse response,
-						HttpSession session
-						)throws IOException {
-			
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter writer = response.getWriter();
-			//·Î±×ÀÎ¾ÈÇÏ¸é ÇÏµµ·Ï
-			if(session.getAttribute("loginInfo") == null) {
-				writer.println("<script> alert('·Î±×ÀÎ ÈÄ ÀÌ¿ë°¡´ÉÇÕ´Ï´Ù');  history.go(-1);  </script>");
-				writer.flush(); //alertÀ» ³»º¸³»¶ó´Â ¶æ 
-				session.setAttribute("destination", "redirect:/order.mall");
-				return getPage;
-		
+			HttpSession session
+			)throws IOException {
+
+		//ë¡œê·¸ì¸ ì•ˆí–ˆìœ¼ë©´ ë¡œê·¸ì¸ í•˜ë„ë¡
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter writer = response.getWriter();
+		if(session.getAttribute("loginInfo") == null) {
+			writer.println("<script> alert('ë¡œê·¸ì¸ í›„ ì´ìš©ê°€ëŠ¥í•©ë‹ˆë‹¤.');  history.go(-1);  </script>");
+			writer.flush();
+			session.setAttribute("destination", "redirect:/order.mall");
+
+		}
+		return getPage;
+
+
 	}
-			return getPage; //¿©±â¼­ order.mall·Î °¡¸é ¸®½ºÆ® ¶Ç µÇ´Â°Å¿©¼­ ¿À·ù³²..
-		
-	
-}
 }

@@ -27,7 +27,7 @@ import order.model.OrderDao;
 @Controller
 public class OrderListController {
 
-	//¹Ù·Î°áÁ¦ Å¬¸¯ÇÏ¸é  ->¿©±â °áÁ¦³»¿ª ÄÁÆ®·Ñ·¯ ->orderlist.jsp·Î ÀÌµ¿
+	//ï¿½Ù·Î°ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ï¸ï¿½  ->ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ ->orderlist.jspï¿½ï¿½ ï¿½Ìµï¿½
 	private final String command="/orderList.mall";
 	private final String getPage="/orderList";
 	private String gotoPage ="redirect:/odlist.mall";
@@ -48,26 +48,26 @@ public class OrderListController {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter writer=response.getWriter();
 		
-		System.out.println("¹Ù·Î°áÁ¦num : "+num);
-		System.out.println("¹Ù·Î°áÁ¦Orderqty : "+orderqty); //µğÅ×ÀÏ¿¡¼­ °¡Á®¿À±â
+		System.out.println("ë°”ë¡œê²°ì œnum : "+num);
+		System.out.println("ë°”ë¡œê²°ì œOrderqty : "+orderqty); //ë””í…Œì¼ì—ì„œ ê°€ì ¸ì˜¤ê¸°
 		
-		//·Î±×ÀÎ¾ÈÇØµµ »ó¼¼º¸±â µé¾î°¥¼öÀÖÁö¸¸ ÁÖ¹®Àº ·Î±×ÀÎÀ» ÇØ¾ß µé¾î°¥¼öÀÖ°Ô ¸¸µé°í ½Í´Ù. 
-		if(session.getAttribute("loginInfo") == null) { //·Î±×ÀÎ ¾ÈÇßÀ¸¸é 
+		//ë¡œê·¸ì¸ì•ˆí•´ë„ ìƒì„¸ë³´ê¸° ë“¤ì–´ê°ˆìˆ˜ìˆì§€ë§Œ ì£¼ë¬¸ì€ ë¡œê·¸ì¸ì„ í•´ì•¼ ë“¤ì–´ê°ˆìˆ˜ìˆê²Œ ë§Œë“¤ê³  ì‹¶ë‹¤. 
+		if(session.getAttribute("loginInfo") == null) { //ë¡œê·¸ì¸ ì•ˆí–ˆìœ¼ë©´ 
 			session.setAttribute("destination", "redirect:/detail.al?num="+num+"&pageNumber="+pageNumber); 
-			//³Ñ¾î¿À´Â °ªÀÌ ÀÖ¾î¾ß ÇØ¼­ »ó¼¼º¸±â·Î °¡±â! ¹øÈ£¿Í ÆäÀÌÁö³Ñ¹ö¸¦ ³Ñ°ÜÁà¾ß ÀÌÀüÀÇ »ó¼¼º¸±â·Î °£´Ù.
+			//ë„˜ì–´ì˜¤ëŠ” ê°’ì´ ìˆì–´ì•¼ í•´ì„œ ìƒì„¸ë³´ê¸°ë¡œ ê°€ê¸°! ë²ˆí˜¸ì™€ í˜ì´ì§€ë„˜ë²„ë¥¼ ë„˜ê²¨ì¤˜ì•¼ ì´ì „ì˜ ìƒì„¸ë³´ê¸°ë¡œ ê°„ë‹¤.
 			return "redirect:/login.mem";
 		}
-		else { //·Î±×ÀÎ ÇßÀ¸¸é
+		else { //ë¡œê·¸ì¸ í–ˆìœ¼ë©´
 			
 			AlcoholBean alcohol = alcoholDao.getAlcoholByNum(String.valueOf(num));
-			//ÁÖ¹®³»¿ª ÁÖ¹®µğÅ×ÀÏ¿¡ ³Ö±âÀü¿¡ ¼ö·®ÀÌ ¸¹À¸¸é °æ°íÇÏ±â!
+			//ì£¼ë¬¸ë‚´ì—­ ì£¼ë¬¸ë””í…Œì¼ì— ë„£ê¸°ì „ì— ìˆ˜ëŸ‰ì´ ë§ìœ¼ë©´ ê²½ê³ í•˜ê¸°!
 			if(orderqty>Integer.valueOf(alcohol.getStock())) {
-				writer.println("<script> alert('ÁÖ¹®¼ö·®ÀÌ Àç°íº¸´Ù ¸¹½À´Ï´Ù.(Àç°í:"+alcohol.getStock()+"°³)'); history.go(-1); </script>");
+				writer.println("<script> alert('ì£¼ë¬¸ìˆ˜ëŸ‰ì´ ì¬ê³ ë³´ë‹¤ ë§ìŠµë‹ˆë‹¤.(ì¬ê³ :"+alcohol.getStock()+"ê°œ)'); history.go(-1); </script>");
 				writer.flush();
 				return "redirect:/detail.al";
 			}
 			
-			//*¹ø»óÇ° *°³ ´ãÀ» Àå¹Ù±¸´Ï°¡ ÇÊ¿ä, + ÇÏ³ªÀÇ Àå¹Ù±¸´Ï¿¡ ¿©·¯»óÇ° ´ã¾Æ¾ßÇÑ´Ù.ÇÏ³ª¸¸µé¸é °è¼Ó °¡Áö°í ´Ù´Ò°Å´Ù.
+			//*ë²ˆìƒí’ˆ *ê°œ ë‹´ì„ ì¥ë°”êµ¬ë‹ˆê°€ í•„ìš”, + í•˜ë‚˜ì˜ ì¥ë°”êµ¬ë‹ˆì— ì—¬ëŸ¬ìƒí’ˆ ë‹´ì•„ì•¼í•œë‹¤.í•˜ë‚˜ë§Œë“¤ë©´ ê³„ì† ê°€ì§€ê³  ë‹¤ë‹ê±°ë‹¤.
 			MyCartList mycart = (MyCartList) session.getAttribute("mycart");
 			System.out.println("mycart:"+mycart);
 			

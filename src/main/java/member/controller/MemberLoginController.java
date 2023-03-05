@@ -66,8 +66,7 @@ public class MemberLoginController {
 			}
 			
 		}else {//존재하지 않은 회원입니다 null
-			System.out.println("議댁옱�븯吏� �븡�� �쉶�썝�엯�땲�떎.");
-
+			
 			writer.println("<script type='text/javascript'>");
 			writer.println("alert('존재하지 않는 회원입니다.');");
 			writer.println("</script>");

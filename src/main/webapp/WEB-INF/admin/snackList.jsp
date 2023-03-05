@@ -50,7 +50,7 @@
 		<c:forEach var="alcohol" items="${ lists }" varStatus="i">
 			<c:if test="${ alcohol.appr eq 0 }">
 				<tr>
-					<td><img src="<%= request.getContextPath() %>/resources/${ alcohol.image }"
+					<td><img src="<%= request.getContextPath() %>/resources/images/alcohol/${ alcohol.image }"
 							width="50" height="50"></td>
 					<td>${ alcohol.memid }</td>
 					<td>${ alcohol.name }</td>
@@ -105,13 +105,13 @@
 				<td>재고
 				</td>
 				<td rowspan="4" style="font-size: 11pt; font-weight: bold;">
-					<a href="updateSnack.ad?num=${ alcohol.num }">수정</a>
+					<%-- <a href="updateSnack.ad?num=${ alcohol.num }">수정</a> --%>
 					<a href="deleteSnack.ad?num=${ alcohol.num }">삭제</a>
 				</td>
 			</tr>
 			<tr>
 				<td rowspan="3">
-					<img src="<%= request.getContextPath() %>/resources/${ alcohol.image }"
+					<img src="<%= request.getContextPath() %>/resources/images/alcohol/${ alcohol.image }"
 						width="100" height="100">
 				</td>
 				<td>${ alcohol.code }</td>

@@ -31,27 +31,27 @@ import utility.Paging;
 
 @Controller
 public class SellerInsertController {
-	
+
 	private final String command = "/sellerInsert.ad";
 	private String getPage = "/sellerInsertForm";
 	private String gotoPage = "redirect:/sellerList.ad";
-	
+
 	@Autowired
 	private AlcoholDao alcoholDao;
-	
+
 	@Autowired
 	ServletContext application;
-	
+
 	@Autowired
 	private SnCateDao snCateDao;
-	
+
 	@RequestMapping(command)
 	public String insert(Model model){
-		
-		//Ä«Å×°í¸® ÀÛ¾÷
+
+		//ì¹´í…Œê³ ë¦¬ ì‘ì—…
 		List<SnCateBean> lists2 = new ArrayList<SnCateBean>();
 		lists2 = snCateDao.getAllSnCate();
-				
+
 		List<AlcoholBean> lists3 = new ArrayList<AlcoholBean>();
 		for(SnCateBean x : lists2) {
 			AlcoholBean snCate = new AlcoholBean();
@@ -60,12 +60,12 @@ public class SellerInsertController {
 			snCate.setCategory(category);
 			lists3.add(snCate);
 		}
-		
+
 		model.addAttribute("lists3", lists3);
-			
+
 		return getPage;
 	}
-	
+
 	@RequestMapping(value=command, method = RequestMethod.POST)
 	public String insert(@ModelAttribute("alcohol") @Valid AlcoholBean alcohol, BindingResult result,
 			@RequestParam(value="pageNumber", required = false) String pageNumber,
@@ -74,42 +74,42 @@ public class SellerInsertController {
 			HttpServletRequest request,
 			Model model,
 			HttpServletResponse response) throws IOException {
-		
-		if(result.hasErrors()) {
-			
-			/*
-			PrintWriter pw = response.getWriter();
-			response.setContentType("text/html;charset=UTF-8"); //³»º¸³»´Â µ¥ÀÌÅÍÀÇ ÇÑ±ÛÃ³¸®
 
-			pw.println("<script>");
-			pw.println("alert('Ä«Å×°í¸®¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä');");
-			pw.println("</script>");
-			pw.flush(); // ¾È¾²¸é ¾È¶ä
-			*/ //¾²¸é ¸®ÅÏ ÆäÀÌÁö°¡ ¾È³ª¿È
-			
-			//°Ë»ö¾î
+		if(result.hasErrors()) {
+
+			/*
+					PrintWriter pw = response.getWriter();
+					response.setContentType("text/html;charset=UTF-8"); //ë‚´ë³´ë‚´ëŠ” ë°ì´í„°ì˜ í•œê¸€ì²˜ë¦¬
+
+					pw.println("<script>");
+					pw.println("alert('ì¹´í…Œê³ ë¦¬ë¥¼ ì„ íƒí•´ ì£¼ì„¸ìš”');");
+					pw.println("</script>");
+					pw.flush(); // ì•ˆì“°ë©´ ì•ˆëœ¸
+			 */ //ì“°ë©´ ë¦¬í„´ í˜ì´ì§€ê°€ ì•ˆë‚˜ì˜´
+
+			//ê²€ìƒ‰ì–´
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("whatColumn", whatColumn);
 			map.put("keyword", "%"+keyword+"%");
 			//System.out.println("whatColumn "+whatColumn);
 			//System.out.println("keyword "+keyword);
-			
-			//ÆäÀÌÂ¡
+
+			//í˜ì´ì§•
 			int totalCount = alcoholDao.getTotalCount2(map);
 			String url = request.getContextPath()+"/"+command;
-			
+
 			Paging pageInfo = new Paging(pageNumber,"5",totalCount,url,whatColumn,keyword,null);
-			
-			//ÁÖ·ù ¸®½ºÆ® °¡Á®¿À±â
+
+			//ì£¼ë¥˜ ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
 			List<AlcoholBean> lists = new ArrayList<AlcoholBean>();
 			lists = alcoholDao.getAllSnack(map,pageInfo);
-			
-			//Ä«Å×°í¸® ÀÛ¾÷
+
+			//ì¹´í…Œê³ ë¦¬ ì‘ì—…
 			List<SnCateBean> lists2 = new ArrayList<SnCateBean>();
 			lists2 = snCateDao.getAllSnCate();
-			
+
 			System.out.println("lists.size() "+lists.size());
-					
+
 			List<AlcoholBean> lists3 = new ArrayList<AlcoholBean>();
 			for(SnCateBean x : lists2) {
 				AlcoholBean snCate = new AlcoholBean();
@@ -118,30 +118,30 @@ public class SellerInsertController {
 				snCate.setCategory(category);
 				lists3.add(snCate);
 			}
-			
+
 			model.addAttribute("lists", lists);
 			model.addAttribute("lists3", lists3);
 			model.addAttribute("pageInfo", pageInfo);
 			model.addAttribute("totalCount", totalCount);
-			
+
 			return getPage;
-			
+
 		}
-		
+
 		//System.out.println("AdminAlcoholInsertController");
 		//System.out.println(alcohol.getUpload());
 		//System.out.println(alcohol.getImage());
-		
-		//ÆÄÀÏ ¿Ã¸®±â
-		String path = application.getRealPath("/resources");
+
+		//íŒŒì¼ ì˜¬ë¦¬ê¸°
+		String path = application.getRealPath("/resources/images/alcohol");
 		System.out.println(path);
-		
-		MultipartFile multi = alcohol.getUpload(); //ÆÄÀÏ Á¤º¸
-		MultipartFile multi2 = alcohol.getUpload2(); //ÆÄÀÏ Á¤º¸
-		
+
+		MultipartFile multi = alcohol.getUpload(); //íŒŒì¼ ì •ë³´
+		MultipartFile multi2 = alcohol.getUpload2(); //íŒŒì¼ ì •ë³´
+
 		File file = new File(path+"/"+multi.getOriginalFilename());
 		File file2 = new File(path+"/"+multi2.getOriginalFilename());
-		
+
 		try {
 			multi.transferTo(file);
 			multi2.transferTo(file2);
@@ -152,12 +152,12 @@ public class SellerInsertController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		//appr default 0
-		
+
 		alcoholDao.insertSnack(alcohol);
-		
-		
+
+
 		return gotoPage;
 	}
 

@@ -57,32 +57,32 @@ public class AdminAlcoholInsertController {
 			
 			/*
 			PrintWriter pw = response.getWriter();
-			response.setContentType("text/html;charset=UTF-8"); //³»º¸³»´Â µ¥ÀÌÅÍÀÇ ÇÑ±ÛÃ³¸®
+			response.setContentType("text/html;charset=UTF-8"); //ë‚´ë³´ë‚´ëŠ” ë°ì´í„°ì˜ í•œê¸€ì²˜ë¦¬
 
 			pw.println("<script>");
-			pw.println("alert('Ä«Å×°í¸®¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä');");
+			pw.println("alert('ì¹´í…Œê³ ë¦¬ë¥¼ ì„ íƒí•´ ì£¼ì„¸ìš”');");
 			pw.println("</script>");
-			pw.flush(); // ¾È¾²¸é ¾È¶ä
-			*/ //¾²¸é ¸®ÅÏ ÆäÀÌÁö°¡ ¾È³ª¿È
+			pw.flush(); // ì•ˆì“°ë©´ ì•ˆëœ¸
+			*/ //ì“°ë©´ ë¦¬í„´ í˜ì´ì§€ê°€ ì•ˆë‚˜ì˜´
 			
-			//°Ë»ö¾î
+			//ê²€ìƒ‰ì–´
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("whatColumn", whatColumn);
 			map.put("keyword", "%"+keyword+"%");
 			//System.out.println("whatColumn "+whatColumn);
 			//System.out.println("keyword "+keyword);
 			
-			//ÆäÀÌÂ¡
+			//í˜ì´ì§•
 			int totalCount = alcoholDao.getTotalCount1(map);
 			String url = request.getContextPath()+"/"+command;
 			
 			Paging pageInfo = new Paging(pageNumber,"5",totalCount,url,whatColumn,keyword,null);
 			
-			//ÁÖ·ù ¸®½ºÆ® °¡Á®¿À±â
+			//ì£¼ë¥˜ ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
 			List<AlcoholBean> lists = new ArrayList<AlcoholBean>();
 			lists = alcoholDao.getAllAlcohol(map,pageInfo);
 			
-			//ÁÖ·ù Ä«Å×°í¸® °¡Á®¿À±â
+			//ì£¼ë¥˜ ì¹´í…Œê³ ë¦¬ ê°€ì ¸ì˜¤ê¸°
 			List<AlCateBean> lists2 = new ArrayList<AlCateBean>();
 			lists2 = alCateDao.getAllAlCate();
 			
@@ -99,18 +99,19 @@ public class AdminAlcoholInsertController {
 		System.out.println(alcohol.getUpload());
 		System.out.println(alcohol.getImage());
 		
-		//ÆÄÀÏ ¿Ã¸®±â
-		String path = application.getRealPath("/resources");
-		System.out.println(path);
+		//íŒŒì¼ ì—…ë¡œë“œ
+		String path = application.getRealPath("/resources/images/alcohol");
+		//System.out.println(path);
+		//C:\Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Mall_Sulmart\resources\images\alcohol
 		
-		MultipartFile multi = alcohol.getUpload(); //ÆÄÀÏ Á¤º¸
-		MultipartFile multi2 = alcohol.getUpload2(); //ÆÄÀÏ Á¤º¸
+		MultipartFile multi = alcohol.getUpload(); //íŒŒì¼ìì²´
+		MultipartFile multi2 = alcohol.getUpload2();
 		
-		File file = new File(path+"/"+multi.getOriginalFilename());
+		File file = new File(path+"/"+multi.getOriginalFilename()); //ê²½ë¡œ/íŒŒì¼ì´ë¦„ì˜ íŒŒì¼ ìƒì„±
 		File file2 = new File(path+"/"+multi2.getOriginalFilename());
 		
 		try {
-			multi.transferTo(file);
+			multi.transferTo(file); //íŒŒì¼(ë©€í‹°)ì„ 'ê²½ë¡œ/íŒŒì¼ì´ë¦„'íŒŒì¼ì— ì§‘ì–´ ë„£ê¸°
 			multi2.transferTo(file2);
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
