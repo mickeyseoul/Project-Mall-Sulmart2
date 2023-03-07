@@ -16,6 +16,10 @@
 		<if test="whatColumn=='seller'">
 			where seller like #{keyword}
 		</if>
+		<if test="whatColumn=='whole'">
+			where id like #{keyword} or name like #{keyword} 
+		</if>
+		order by num desc
 
 	</select>
 
@@ -30,6 +34,10 @@
 		<if test="whatColumn=='seller'">
 			where seller like #{keyword}
 		</if>
+		<if test="whatColumn=='whole'">
+			where id like #{keyword} or name like #{keyword} 
+		</if>
+		order by num desc
 
 
 	</select>

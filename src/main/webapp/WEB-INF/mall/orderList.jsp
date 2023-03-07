@@ -37,7 +37,7 @@
 		<td>${cart.num}</td>
 		<td>
 			<img height=50 width=50 
-			src="<%=request.getContextPath()%>/resources/${cart.image}">  <!-- 그러면 쇼핑인포에서 목록을 더 늘려야됨?- -->
+			src="<%=request.getContextPath()%>/resources/images/alcohol/${cart.image}">  <!-- 그러면 쇼핑인포에서 목록을 더 늘려야됨?- -->
 		</td>
 		<td align="left">
 			${cart.name}<br>

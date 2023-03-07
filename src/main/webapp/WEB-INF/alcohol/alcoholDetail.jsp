@@ -48,7 +48,7 @@ function stock(){
 		<table border="1" style="width: 80%" class="table table-hover">
 			<tr>
 				<td rowspan="7" align="center"><img
-					src="<%=request.getContextPath()%>/resources/${ab.image}" width="400px" align="center"></td>
+					src="<%=request.getContextPath()%>/resources/images/alcohol/${ab.image}" width="400px" align="center"></td>
 				<td align=center>상품명</td>
 				<td>&nbsp;${ab.name}</td>
 			</tr>
@@ -88,13 +88,14 @@ function stock(){
 						<c:choose>
 							<c:when test="${ab.heart == 1 || ab.heart eq null}">
 								<tr>
-									<td><input type="button" id="heart" data-id="${ab.num}"
+									<td align="center"><input type="button" id="heart" data-id="${ab.num}"
 										onclick="HeartAjax(this);" value="찜하기"
 										class="btn btn-primary btn-sm"></td>
 									<!-- <td><input type="submit" value="장바구니" class="btn btn-primary btn-sm"></td> -->
+									<td>가격</td>
 									<td colspan="2">
-										<p id="price" data-price="${ab.price}">${ab.price }
-										<p>원
+										<p id="price" data-price="${ab.price}">${ab.price } 원
+										<p>
 									</td>
 								</tr>
 							</c:when>

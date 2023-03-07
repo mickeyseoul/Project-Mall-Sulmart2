@@ -49,6 +49,7 @@ public class MemberLoginController {
 			if(member.getPassword().equals(login.getPassword())) { //비번 일치하면
 				String destination = (String)session.getAttribute("destination");
 				session.setAttribute("loginInfo", login);
+				session.setMaxInactiveInterval(60*60);
 				
 				if(login.getId().equals("admin") || Integer.valueOf(login.getSeller())==1) {
 					return gotoPage2;

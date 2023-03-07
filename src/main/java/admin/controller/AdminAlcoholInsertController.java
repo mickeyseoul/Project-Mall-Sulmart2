@@ -45,7 +45,7 @@ public class AdminAlcoholInsertController {
 	private AlCateDao alCateDao;
 	
 	@RequestMapping(command)
-	public String insert(@ModelAttribute("alcohol") @Valid AlcoholBean alcohol, BindingResult result,
+	public String insert(@ModelAttribute("alcohol") @Valid AlcoholBean alcohol, BindingResult result, //@ModelAttribute("별칭") @Valid 커맨드객체
 			@RequestParam(value="pageNumber", required = false) String pageNumber,
 			@RequestParam(value="whatColumn", required = false) String whatColumn,
 			@RequestParam(value="keyword", required = false) String keyword,
@@ -54,17 +54,6 @@ public class AdminAlcoholInsertController {
 			HttpServletResponse response) throws IOException {
 		
 		if(result.hasErrors()) {
-			
-			/*
-			PrintWriter pw = response.getWriter();
-			response.setContentType("text/html;charset=UTF-8"); //내보내는 데이터의 한글처리
-
-			pw.println("<script>");
-			pw.println("alert('카테고리를 선택해 주세요');");
-			pw.println("</script>");
-			pw.flush(); // 안쓰면 안뜸
-			*/ //쓰면 리턴 페이지가 안나옴
-			
 			//검색어
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("whatColumn", whatColumn);
@@ -95,9 +84,9 @@ public class AdminAlcoholInsertController {
 			
 		}
 		
-		System.out.println("AdminAlcoholInsertController");
-		System.out.println(alcohol.getUpload());
-		System.out.println(alcohol.getImage());
+		//System.out.println("AdminAlcoholInsertController");
+		//System.out.println(alcohol.getUpload());
+		//System.out.println(alcohol.getImage());
 		
 		//파일 업로드
 		String path = application.getRealPath("/resources/images/alcohol");

@@ -32,7 +32,7 @@
 
 <form action="list.mem" method="get">
 		   	<select name="whatColumn">
-		   		<option value="">전체검색</option>
+		   		<option value="whole">전체검색</option>
 		   		<option value="name">닉네임</option>
 		   		<option value="id">회원ID</option>
 		   	</select>

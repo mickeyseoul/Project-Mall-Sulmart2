@@ -30,7 +30,7 @@
 	<tr align="center" class="table-light">
 		<td >${i.count }</td>
 		<td>
-			<img height=60 width=60 src="<%=request.getContextPath()%>/resources/${shop.image}"> &nbsp;  
+			<img height=60 width=60 src="<%=request.getContextPath()%>/resources/images/alcohol/${shop.image}"> &nbsp;  
 			<a href="detail.al?num=${shop.num}">${shop.name}</a>
 		</td>
 		<td>${shop.qty}</td>
