@@ -23,7 +23,7 @@ $(window).ready(function() {
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <a href="detail.al?num=4">
+      <a href="detail.al?num=5">
       <img src="<%= request.getContextPath() %>/resources/images/대문이미지1.jpg" class="d-block w-100">
       </a>
       <div class="carousel-caption d-none d-md-block">
@@ -32,7 +32,7 @@ $(window).ready(function() {
       </div>
     </div>
     <div class="carousel-item">
-    	<a href="detail.al?num=5">
+    	<a href="detail.al?num=6">
       <img src="<%= request.getContextPath() %>/resources/images/대문이미지2.jpg" class="d-block w-100">
       </a>
       <div class="carousel-caption d-none d-md-block">
@@ -41,7 +41,7 @@ $(window).ready(function() {
       </div>
     </div>
     <div class="carousel-item">
-    	<a href="detail.al?num=6">
+    	<a href="detail.al?num=7">
       <img src="<%= request.getContextPath() %>/resources/images/대문이미지3.jpg" class="d-block w-100">
       </a>
       <div class="carousel-caption d-none d-md-block">

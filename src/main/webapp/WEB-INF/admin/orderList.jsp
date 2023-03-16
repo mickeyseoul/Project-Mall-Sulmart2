@@ -64,9 +64,9 @@
 	</c:forEach>
 </table>
 
-<br>
 
 ${ pageInfo.pagingHtml }
+<br><br>
 
 
 </center>

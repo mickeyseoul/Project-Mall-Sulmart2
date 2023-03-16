@@ -8,14 +8,13 @@
 
 <!-- 바로 결제 -->
 <script type="text/javascript">
-function goOrder(num){ //넘어오는거 잊지마~
+function goOrder(num){ 
 	//alert(1);
 	orderqty = f.orderqty.value;
 	
-	if(orderqty =="" || f.orderqty.value <= 0){ //숫자가 없거나 음수를 넣으면 
+	if(f.orderqty.value =="" || f.orderqty.value <= 0){ //숫자가 없거나 음수를 넣으면 
 		alert('상품갯수는 1개이상 입력해야합니다.');
-		location.href="main.mall";
-		return; //이거없으면 밑으로 감.. 꼭! 잊지마
+		return false;
 	}
 	location.href='orderList.mall?num='+num+'&orderqty='+orderqty;
 }
@@ -23,6 +22,11 @@ function goOrder(num){ //넘어오는거 잊지마~
 function stock(){
 	//alert(f.orderqty.value);
 	//alert(f.chstock.value);
+	if(f.orderqty.value =="" || f.orderqty.value <= 0){
+		alert('상품갯수는 1개이상 입력해야합니다.');
+		return false;
+	}
+	
 	if(f.orderqty.value>f.chstock.value){
 		alert("주문 수량이 재고보다 많습니다. (재고:"+f.chstock.value+")");
 		return false;
@@ -33,7 +37,7 @@ function stock(){
 <br>
 <hr>
 <center>
-	<h2><b>상품 상세보기 화면</b></h2>
+	<h2><b>상세보기</b></h2>
 </center> 
 <hr>
 
@@ -45,16 +49,19 @@ function stock(){
 		<input type="hidden" name="pageNumber" value="2">
 		<input type="hidden" name="chstock" value="${ stock }">
 
-		<table border="1" style="width: 80%" class="table table-hover">
+		<table border="1" style="width: 80%; height: 400px;" class="table table-sm">
 			<tr>
-				<td rowspan="7" align="center"><img
-					src="<%=request.getContextPath()%>/resources/images/alcohol/${ab.image}" width="400px" align="center"></td>
-				<td align=center>상품명</td>
+				<td rowspan="7" align="center" valign="middle"><img
+					src="<%=request.getContextPath()%>/resources/images/alcohol/${ab.image}"
+					 width="400px"></td>
+				<td>상품명</td>
 				<td>&nbsp;${ab.name}</td>
 			</tr>
 			<tr>
 				<td>가격</td>
-				<td>&nbsp;${ab.price }</td>
+				<td>
+				<fmt:formatNumber pattern="#,###" value="${ ab.price }"/>
+				 원</td>
 			</tr>
 			<tr>
 				<td>상품 코드</td>
@@ -70,13 +77,13 @@ function stock(){
 			</tr>
 
 			<td>수량</td>
-			<td><input type="number" name="orderqty" value="1" min="1">
-
+			<td><input type="text" name="orderqty" value="1" min="1" size="2">
 				<input type="submit" value="장바구니" class="btn btn-primary btn-sm" onclick="return stock()">
 				<input type="button" value="바로결제" class="btn btn-primary btn-sm"
 				onclick="goOrder(${ab.num})"></td>
 			</tr>
-
+	
+			<!-- 찜기능 -->
 			<tr>
 				<c:choose>
 					<c:when test="${sessionScope.loginInfo eq null}">
@@ -117,14 +124,25 @@ function stock(){
 		</table>
 
 		<div style="width: 50%; display: flex; justify-content: flex-start;">
-			<img src="<%=request.getContextPath()%>/resources/${ab.image}" width="100px"
+			<img src="<%=request.getContextPath()%>/resources/images/alcohol/${ab.image}" width="100px"
 				style="border: 1px solid #d3d3d3;">
 		</div>
 
 
 	</form>
-	<br> <br> <img src="<%=request.getContextPath()%>/resources/${ab.contentImage}" />
-
+	
+	
+	<br><br>
+	<table width="80%" style="background-color: #EAEAEA;">
+		<tr><td align="center">
+			<img src="<%=request.getContextPath()%>/resources/images/alcohol/${ab.contentImage}" width="600" />
+		</td></tr>
+	</table>
+	
+	
+	<br>
+	
+	
 	<table border="1" width="500" height="400">
 		<tr>
 			<td>평가<br> <c:choose>
