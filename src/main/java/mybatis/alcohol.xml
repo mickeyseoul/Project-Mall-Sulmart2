@@ -374,6 +374,15 @@
       set readcount = NVL(readcount, 0) + 1
       where num = #{num}
    </update>
+   
+   <!-- 2023-03-17 찜하기 -->
+   <insert id="HeartInsert">
+   		insert into heart values(#{memid},#{num},sysdate)
+   </insert>
+   
+   <select id="RecordExist" resultType="int">
+   		select * from heart where mem_num = #{num}
+   </select>
 	
 	
 </mapper>

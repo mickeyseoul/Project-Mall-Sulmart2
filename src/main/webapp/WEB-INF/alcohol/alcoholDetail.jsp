@@ -32,6 +32,25 @@ function stock(){
 		return false;
 	}
 }
+
+function HeartAjax(num) {
+	
+	$.ajax({
+		url : '/ex/heart.al',
+		data : {
+			num : num
+		},
+		success : function(data) {
+			if (data < 1) {
+				alert("통신 실패");
+			} else {
+				alert("해당 상품이 찜 되었습니다.");
+			}
+		}
+	});
+	
+}
+
 </script>
 
 <br>
@@ -96,7 +115,7 @@ function stock(){
 							<c:when test="${ab.heart == 1 || ab.heart eq null}">
 								<tr>
 									<td align="center"><input type="button" id="heart" data-id="${ab.num}"
-										onclick="HeartAjax(this);" value="찜하기"
+										onclick="HeartAjax(${ ab.num });" value="찜하기"
 										class="btn btn-primary btn-sm"></td>
 									<!-- <td><input type="submit" value="장바구니" class="btn btn-primary btn-sm"></td> -->
 									<td>가격</td>
@@ -133,10 +152,13 @@ function stock(){
 	
 	
 	<br><br>
+	<!-- 본문 이미지 -->
 	<table width="80%" style="background-color: #EAEAEA;">
+		<tr height="50"></tr>
 		<tr><td align="center">
-			<img src="<%=request.getContextPath()%>/resources/images/alcohol/${ab.contentImage}" width="600" />
+			<img src="<%=request.getContextPath()%>/resources/images/alcohol/${ab.contentImage}" width="50%" />
 		</td></tr>
+		<tr height="50"></tr>
 	</table>
 	
 	
@@ -209,7 +231,7 @@ function stock(){
 
 				<td width="350">내용 : ${item.content}<br> <c:if
 						test="${item.image ne null || not empty item.image}">
-						<img src="resources/images/${item.image}">
+						<img src="<%=request.getContextPath() %>resources/images/alcohol/${item.image}">
 					</c:if> <br> 추천 :
 					<p id="recomm">${item.recomm}</p>
 
@@ -289,9 +311,9 @@ function stock(){
 		});
 	}
 
-	/* 찜 */
+	/* 찜
 	function HeartAjax(event) {
-	
+		
 		$.ajax({
 			url : '/ex/heart.al',
 			data : {
@@ -313,7 +335,9 @@ function stock(){
 				}
 			}
 		});
+		
 	}
+	*/
 	
 	function deleteReview(event) {
 		console.log($(event).data("id"));

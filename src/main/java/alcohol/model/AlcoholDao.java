@@ -278,6 +278,22 @@ public class AlcoholDao {
 		map.put("productID", productID);
 		return sqlSessionTemplate.selectOne(namespace + ".checkHeart", map);
 	}
+	
+	
+
+	//2023-03-17 찜하기 박이랑
+	public void heartInsert(AlcoholBean bean) {
+		sqlSessionTemplate.insert(namespace + ".HeartInsert", bean);
+	
+		
+	}
+
+	public int recordExist(int num) {
+		int result = sqlSessionTemplate.selectOne(namespace+".RecordExist", num);
+		System.out.println("dao"+result); //안 나옴 건드릴 수가 없네 ㅋ
+		return result;
+		
+	}
 
 
 	

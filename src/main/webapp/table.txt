@@ -458,21 +458,16 @@
 	drop table heart cascade constraints;				
 					
 	create table heart(				
-					
-					
 		mem_num number not null, --회원 번호			
-	);	prod_num number not null, -- 상품번호			
-		heart_date  date not null			
-	drop sequence heart_seq;				
+		prod_num varchar2(100) not null, -- 상품번호			
+		heart_date date not null
+		);				
 					
-	create sequence heart_seq				
-	increment by 1				
-	start with 1				
-	minvalue 1				
-	maxvalue 10000				
-	nocache;				
-					
-	select * from heart;				
+	select * from heart;
+	
+	
+	
+				
 					
 										
 --up 추천 테이블				
