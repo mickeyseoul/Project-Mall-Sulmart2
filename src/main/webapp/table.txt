@@ -67,7 +67,82 @@
 	col mpoint for 9999				
 	col seller for 99				
 					
-	select * from members;				
+	select * from members;			
+	
+	
+	
+--heart 찜 테이블
+	drop table heart cascade constraints;				
+					
+	create table heart(				
+		mem_num number not null, --회원 번호			
+		prod_num varchar2(100) not null, -- 상품번호			
+		heart_date date default sysdate
+		);	
+		
+	insert into heart (mem_num, prod_num) values(4,1);	
+					
+	select * from heart;			
+					
+					
+--review 리뷰게시판
+	drop table review cascade constraints;								
+	create table review(				
+		num number primary key,			
+		title varchar2(200) not null,			
+		content varchar2(1000) not null,			
+		writer varchar2(50) not null,			
+		passwd varchar2(50) not null,			
+		email varchar2(50),			
+		star number not null,			
+		reg_date date not null,			
+		ref number not null,			
+		re_step number not null,			
+		re_level number not null,			
+		ip varchar2(15) not null,			
+		image varchar2(1000),			
+		recomm number default 0 not null			
+	);				
+	drop sequence review_seq ;				
+					
+	create sequence review_seq				
+	increment by 1				
+	start with 1				
+	minvalue 1				
+	maxvalue 10000				
+	nocache;				
+					
+	insert into review (num,title,content,writer,passwd,email,star,reg_date,ref,re_step,re_level,ip,image,recomm) values (1,'좋아요','굿굿굿','a1','1234','sss@sss.com',5,to_date('19/01/01','RR/MM/DD'),1,0,0,'127.0.0.1',null,1);				
+	insert into review (num,title,content,writer,passwd,email,star,reg_date,ref,re_step,re_level,ip,image,recomm) values (2,'별로','그냥','a2','5678','ddd@sss.com',2,to_date('19/01/02','RR/MM/DD'),2,0,0,'126.0.0.9',null,0);				
+	insert into review (num,title,content,writer,passwd,email,star,reg_date,ref,re_step,re_level,ip,image,recomm) values (3,'그냥그래요','ㅎㅎ','a3','1111','lll@sss.com',3,to_date('22/01/08','RR/MM/DD'),1,6,0,'127.0.0.1',null,1);				
+	insert into review (num,title,content,writer,passwd,email,star,reg_date,ref,re_step,re_level,ip,image,recomm) values (4,'괜춘','좋은듯','a4','8989','ggg@sss.com',4,to_date('21/05/01','RR/MM/DD'),1,5,0,'129.0.5.1','asdasd',1);				
+	insert into review (num,title,content,writer,passwd,email,star,reg_date,ref,re_step,re_level,ip,image,recomm) values (47,' ','asdasd','admin',' ',' ',5,to_date('22/09/27','RR/MM/DD'),8,0,0,' ',null,2);				
+	insert into review (num,title,content,writer,passwd,email,star,reg_date,ref,re_step,re_level,ip,image,recomm) values (60,' ','asdasd','admin',' ',' ',5,to_date('22/09/28','RR/MM/DD'),10,0,0,' ','01_kokmincard.png',1);				
+			
+	select * from  review;				
+					
+					
+-- reviewcomment				
+					
+	drop table reviewcomment;				
+					
+	create table reviewcomment (				
+		idx number primary key,			
+		content clob default '',			
+		review_id number not null,			
+		member_id number not null			
+	);				
+					
+					
+	drop sequence reviewcomment_seq;				
+	create sequence reviewcomment_seq minvalue 1 maxvalue 10000 increment by 1 start with 3 nocache noorder cycle;				
+					
+	commit;	
+	
+		
+		
+		
+		
 					
 					
 --orders 주문			
@@ -452,22 +527,8 @@
 	col image for a10				
 					
 	select * from notice;				
-					
-									
---heart 찜 테이블
-	drop table heart cascade constraints;				
-					
-	create table heart(				
-		mem_num number not null, --회원 번호			
-		prod_num varchar2(100) not null, -- 상품번호			
-		heart_date date not null
-		);				
-					
-	select * from heart;
-	
-	
-	
-				
+						
+
 					
 										
 --up 추천 테이블				
@@ -497,61 +558,9 @@ Insert into UP (NUM,PNUM,UP_UID,REVIEW_ID) values (17,48,'1',48);
 Insert into UP (NUM,PNUM,UP_UID,REVIEW_ID) values (24,57,'1',57);
 Insert into UP (NUM,PNUM,UP_UID,REVIEW_ID) values (22,49,'1',49);
 Insert into UP (NUM,PNUM,UP_UID,REVIEW_ID) values (25,60,'1',60);"				
-select * from up;				
-					
-					
---review 리뷰게시판
-	drop table review cascade constraints;								
-	create table review(				
-		num number primary key,			
-		title varchar2(200) not null,			
-		content varchar2(1000) not null,			
-		writer varchar2(50) not null,			
-		passwd varchar2(50) not null,			
-		email varchar2(50),			
-		star number not null,			
-		reg_date date not null,			
-		ref number not null,			
-		re_step number not null,			
-		re_level number not null,			
-		ip varchar2(15) not null,			
-		image varchar2(1000),			
-		recomm number default 0 not null			
-	);				
-	drop sequence review_seq ;				
-					
-	create sequence review_seq				
-	increment by 1				
-	start with 1				
-	minvalue 1				
-	maxvalue 10000				
-	nocache;				
-					
-	insert into review (num,title,content,writer,passwd,email,star,reg_date,ref,re_step,re_level,ip,image,recomm) values (1,'좋아요','굿굿굿','a1','1234','sss@sss.com',5,to_date('19/01/01','RR/MM/DD'),1,0,0,'127.0.0.1',null,1);				
-	insert into review (num,title,content,writer,passwd,email,star,reg_date,ref,re_step,re_level,ip,image,recomm) values (2,'별로','그냥','a2','5678','ddd@sss.com',2,to_date('19/01/02','RR/MM/DD'),2,0,0,'126.0.0.9',null,0);				
-	insert into review (num,title,content,writer,passwd,email,star,reg_date,ref,re_step,re_level,ip,image,recomm) values (3,'그냥그래요','ㅎㅎ','a3','1111','lll@sss.com',3,to_date('22/01/08','RR/MM/DD'),1,6,0,'127.0.0.1',null,1);				
-	insert into review (num,title,content,writer,passwd,email,star,reg_date,ref,re_step,re_level,ip,image,recomm) values (4,'괜춘','좋은듯','a4','8989','ggg@sss.com',4,to_date('21/05/01','RR/MM/DD'),1,5,0,'129.0.5.1','asdasd',1);				
-	insert into review (num,title,content,writer,passwd,email,star,reg_date,ref,re_step,re_level,ip,image,recomm) values (47,' ','asdasd','admin',' ',' ',5,to_date('22/09/27','RR/MM/DD'),8,0,0,' ',null,2);				
-	insert into review (num,title,content,writer,passwd,email,star,reg_date,ref,re_step,re_level,ip,image,recomm) values (60,' ','asdasd','admin',' ',' ',5,to_date('22/09/28','RR/MM/DD'),10,0,0,' ','01_kokmincard.png',1);				
-			
-	select * from  review;				
-					
-					
--- reviewcomment				
-					
-	drop table reviewcomment;				
-					
-	create table reviewcomment (				
-		idx number primary key,			
-		content clob default '',			
-		review_id number not null,			
-		member_id number not null			
-	);				
-					
-					
-	drop sequence reviewcomment_seq;				
-	create sequence reviewcomment_seq minvalue 1 maxvalue 10000 increment by 1 start with 3 nocache noorder cycle;				
-					
-	commit;		
+select * from up;	
+
+
+	
 
 		

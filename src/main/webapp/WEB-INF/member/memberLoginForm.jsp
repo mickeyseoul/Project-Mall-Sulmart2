@@ -67,12 +67,12 @@ body {
 	<div id="title">Login</div><br><br>
 		
     <div>
-      <input type="text"  style=" width: 430px;" class="form-control" name="id" id="id" placeholder="아이디를 입력해주세요">
+      <input type="text"  style=" width: 430px;" class="form-control" name="id" id="id" value="char" placeholder="아이디를 입력해주세요">
       <label for="floatingInput"></label>
     </div>
 
     <div>
-      <input type="password" style=" width: 430px;" class="form-control" name="password" id="password" placeholder="비밀번호를 입력해주세요">
+      <input type="password" style=" width: 430px;" class="form-control" name="password" id="password" value="1234" placeholder="비밀번호를 입력해주세요">
       <label for="floatingPassword"></label>
     </div>
 

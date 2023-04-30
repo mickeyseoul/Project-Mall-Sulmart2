@@ -34,6 +34,7 @@ function stock(){
 }
 
 function HeartAjax(num) {
+	//alert(num);
 	
 	$.ajax({
 		url : '/ex/heart.al',
@@ -107,21 +108,19 @@ function HeartAjax(num) {
 				<c:choose>
 					<c:when test="${sessionScope.loginInfo eq null}">
 						<tr>
-							<td colspan="2" align=center>회원 구매 가능</td>
+							<td align="center"><input type="button" id="heart" data-id="${ab.num}"
+										onclick="HeartAjax(${ ab.num });" value="찜하기"
+										class="btn btn-primary btn-sm"></td>
 						</tr>
 					</c:when>
 					<c:otherwise>
 						<c:choose>
 							<c:when test="${ab.heart == 1 || ab.heart eq null}">
 								<tr>
-									<td align="center"><input type="button" id="heart" data-id="${ab.num}"
+									<td align="center">
+										<input type="button" id="heart" data-id="${ab.num}"
 										onclick="HeartAjax(${ ab.num });" value="찜하기"
-										class="btn btn-primary btn-sm"></td>
-									<!-- <td><input type="submit" value="장바구니" class="btn btn-primary btn-sm"></td> -->
-									<td>가격</td>
-									<td colspan="2">
-										<p id="price" data-price="${ab.price}">${ab.price } 원
-										<p>
+										class="btn btn-primary btn-sm">
 									</td>
 								</tr>
 							</c:when>
@@ -129,11 +128,6 @@ function HeartAjax(num) {
 								<tr>
 									<td><input type="button" id="heartDel" data-id="${ab.num}"
 										onclick="HeartAjax(this);" value="찜하기 취소"></input></td>
-
-									<td colspan="2">
-										<p id="price" data-price="${ab.price}">${ab.price }
-										<p>원
-									</td>
 								</tr>
 							</c:otherwise>
 						</c:choose>

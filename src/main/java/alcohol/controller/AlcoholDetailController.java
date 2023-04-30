@@ -162,32 +162,7 @@ public class AlcoholDetailController {
 		return msg;
 	}
 	
-	/* 찜 박이랑 */
-	@RequestMapping("/heart.al")
-	@ResponseBody
-	public int heart(String num) {
-		//System.out.println("여기"+num);
-		
-		MemberBean member = (MemberBean)session.getAttribute("loginInfo");
-		int result = alcoholDao.recordExist(member.getNum());
-		System.out.println("result");
-		if(result==1) { //해당 아이디의 찜 레코드가 이미 존재한다면
-			System.out.println("이미 존재");
-			
-		}else { //해당 아이디의 찜 레코드가 없다면
-			
-			AlcoholBean bean = new AlcoholBean();
-			bean.setNum(num);
-			bean.setMemid(String.valueOf(member.getNum()));
-			
-			//System.out.println(num);
-			//System.out.println(member.getNum());
-			alcoholDao.heartInsert(bean);
-			
-		}
-		
-		return 1;
-	}
+	
 	
 	/*
 	@RequestMapping(value = "/heart.al", method = RequestMethod.GET, produces = "application/json")

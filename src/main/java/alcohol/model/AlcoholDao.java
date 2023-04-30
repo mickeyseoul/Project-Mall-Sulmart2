@@ -281,17 +281,22 @@ public class AlcoholDao {
 	
 	
 
-	//2023-03-17 찜하기 박이랑
-	public void heartInsert(AlcoholBean bean) {
+	//2023-04-30 찜하기
+	public void heartInsert(HeartBean bean) {
 		sqlSessionTemplate.insert(namespace + ".HeartInsert", bean);
 	
+	}
+
+	public HeartBean recordExist(int num) {
+		//System.out.println("회원번호"+num);
+		HeartBean bean = sqlSessionTemplate.selectOne(namespace + ".RecordExist", String.valueOf(num));
+		//System.out.println(result); //mybatis String으로 넘겨 줘야 함, int 에러
+		return bean;
 		
 	}
 
-	public int recordExist(int num) {
-		int result = sqlSessionTemplate.selectOne(namespace+".RecordExist", num);
-		System.out.println("dao"+result); //안 나옴 건드릴 수가 없네 ㅋ
-		return result;
+	public void heartUpdate(HeartBean bean) {
+		sqlSessionTemplate.update(namespace+".HeartUpdate", bean);
 		
 	}
 

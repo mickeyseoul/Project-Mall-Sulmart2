@@ -375,14 +375,21 @@
       where num = #{num}
    </update>
    
-   <!-- 2023-03-17 찜하기 -->
+   
+   <!-- 2023-04-30 찜하기 -->
    <insert id="HeartInsert">
-   		insert into heart values(#{memid},#{num},sysdate)
+   		insert into heart (mem_num, prod_num) values (#{mem_num},#{prod_num})
    </insert>
    
-   <select id="RecordExist" resultType="int">
+   <select id="RecordExist" resultType="alcohol.model.HeartBean">
    		select * from heart where mem_num = #{num}
    </select>
+   
+   <update id="HeartUpdate">
+   		update heart set prod_num = #{prod_num}
+   		where mem_num = #{mem_num}
+   </update>
+  
 	
 	
 </mapper>
