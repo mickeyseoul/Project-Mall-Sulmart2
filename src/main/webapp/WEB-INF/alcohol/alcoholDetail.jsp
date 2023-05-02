@@ -102,14 +102,17 @@ function HeartAjax(num) {
 				<input type="button" value="바로결제" class="btn btn-primary btn-sm"
 				onclick="goOrder(${ab.num})"></td>
 			</tr>
-	
-			<!-- 찜기능 -->
+			
+			
+			
+			<!-- 2023-04-30 찜기능 -->
 			<tr>
 				<c:choose>
 					<c:when test="${sessionScope.loginInfo eq null}">
 						<tr>
 							<td align="center"><input type="button" id="heart" data-id="${ab.num}"
-										onclick="HeartAjax(${ ab.num });" value="찜하기"
+										onclick="javascript:alert('로그인 후 찜 가능합니다.'); 
+										location.href='login.mem?alcohol='+${ab.num};" value="찜하기"
 										class="btn btn-primary btn-sm"></td>
 						</tr>
 					</c:when>

@@ -1,7 +1,13 @@
 package alcohol.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.connector.Response;
+import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +28,7 @@ public class HeartController {
 	@Autowired
 	HttpSession session;
 	
+	
 	//2023-04-30 찜하기
 	@RequestMapping("/heart.al")
 	@ResponseBody
@@ -40,6 +47,7 @@ public class HeartController {
 				
 			}else { //해당 상품이 이미 찜 목록에 있다면
 				//System.out.println("해당 상품 이미 존재");
+				
 			}
 			
 			
