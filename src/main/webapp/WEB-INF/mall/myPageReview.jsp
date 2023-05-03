@@ -30,18 +30,18 @@
 			<td>혜택</td>
 			<td>합계</td>
 		</tr>
-		<c:if test="${ fn:length(heartList) eq 0 }">
+		<c:if test="${ fn:length(list) eq 0 }">
 			<tr class="table-light">
 				<td colspan="5" align="center">찜한 상품이 없습니다.</td>
 			</tr>
 		</c:if>
 
-		<c:forEach var="item" items="${heartList}">
+		<c:forEach var="item" items="${list}">
 			<tr class="table-light" align="center">
 
 					<td><input type="checkbox" name="heartCheck"
-						value="${item.prod_num}"></td>
-					<td><img src="<%= request.getContextPath() %>/resources/${item.contentimage}"
+						value="${item.num}"></td>
+					<td><img src="<%= request.getContextPath() %>/resources/images/alcohol/${item.image}"
 						width="150px"><br> ${item.name}</td>
 
 					<td><fmt:formatNumber value="${item.price}"
@@ -53,7 +53,7 @@
 
 					<td><input type="submit" value="장바구니"
 						class="btn btn-primary btn-sm" /> <br><br>
-						<button class="btn btn-secondary btn-sm" onclick="singleProductDeleteClick(this);" data-id="${item.prod_num}">삭제하기
+						<button class="btn btn-secondary btn-sm" onclick="singleProductDeleteClick(this);" data-id="${item.num}">삭제하기
 						</button>
 					</td>
 			</tr>
@@ -120,6 +120,7 @@
 
 	function singleProductDeleteClick(event) {
 		let targetSingleProduct = [$(event).data("id")];
+		alert(id);
 
 		
 		$.ajax({

@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import alcohol.model.HeartBean;
+
 @Component("MypageDao")
 public class MypageDao {
 	String namespace = "mall.model.Mypage";
@@ -15,12 +17,11 @@ public class MypageDao {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 
-	public List<HeartListBean> selectHeartList(int memberId) {
-		List<HeartListBean> heartList = new ArrayList<HeartListBean>();
+	public HeartBean getMyHeart(String mem_num) {
+		//List<HeartListBean> heartList = new ArrayList<HeartListBean>();
+		HeartBean bean = sqlSessionTemplate.selectOne(namespace + ".GetMyHeart", mem_num);
 
-		heartList = sqlSessionTemplate.selectList(namespace + ".myHeartList", memberId);
-
-		return heartList;
+		return bean;
 	}
 
 	public List<ReviewStatusBean> selectReviewStatus(String memberID) {
@@ -47,7 +48,7 @@ public class MypageDao {
 		return crbean;
 	}
 	
-	public int heartProdDelete(HeartListBean heart) {
+	public int heartProdDelete(HeartBean heart) {
 		System.out.println("삭제 메서드 실행 ----");
 		System.out.println(heart);
 		return sqlSessionTemplate.delete(namespace + ".heartProdDelete", heart);

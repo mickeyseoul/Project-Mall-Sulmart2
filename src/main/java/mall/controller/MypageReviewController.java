@@ -1,5 +1,6 @@
 package mall.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import alcohol.model.AlcoholBean;
+import alcohol.model.AlcoholDao;
+import alcohol.model.HeartBean;
 import mall.model.HeartListBean;
 import mall.model.MypageDao;
 import member.model.MemberBean;
@@ -25,22 +29,32 @@ public class MypageReviewController {
 
 	@Autowired
 	MypageDao myPageDao;
+	
+	@Autowired
+	AlcoholDao alcoholDao;
 
 	@RequestMapping(command)
 	public String mypage(HttpSession session, Model model) {
 		MemberBean member = (MemberBean) session.getAttribute("loginInfo");
-		System.out.println(member);
+		//System.out.println(member);
 		if (member == null) {
 
 			return "redirect:/login.mem";
 		}
-
-		// 로그인 한 유저가 누른 찜 리스트 로드
-		List<HeartListBean> list = myPageDao.selectHeartList(member.getNum());
-
-		model.addAttribute("heartList", list);
-
-		System.out.println(list);
+		
+		HeartBean bean = myPageDao.getMyHeart(String.valueOf(member.getNum()));
+		//System.out.println(bean.getProd_num());
+		String[] heartArr = bean.getProd_num().split(" ");
+		
+		List<AlcoholBean> list = new ArrayList<AlcoholBean>();
+		for(String x : heartArr) {
+			//System.out.println(x);
+			AlcoholBean alcohol =  alcoholDao.getAlcoholByNum(x);
+			list.add(alcohol);
+			
+		}
+		
+		model.addAttribute("list", list);
 
 		return getPage;
 	}
@@ -48,7 +62,7 @@ public class MypageReviewController {
 	@ResponseBody
 	@RequestMapping(value = "/prodDelete.mall", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public HashMap<String, String> prodDelete(@RequestParam(value = "checkBoxArr[]") List<String> checkBoxArr,
-			HttpSession session, HeartListBean heart) {
+			HttpSession session, HeartBean bean) {
 		System.out.println("checkBoxArr : [" + checkBoxArr + "]");
 		MemberBean member = (MemberBean) session.getAttribute("loginInfo");
 		HashMap<String, String> msg = new HashMap<String, String>();
@@ -58,7 +72,7 @@ public class MypageReviewController {
 				msg.put("msg", "삭제할 상품을 선택하세요.");
 			} else {
 				System.out.println("삭제 로직 실행");
-				heart.setMem_num(member.getNum());
+				bean.setMem_num(String.valueOf(member.getNum()));
 				// 로그인 했을 경우
 
 				int row = 0;
@@ -66,8 +80,11 @@ public class MypageReviewController {
 
 				for (String i : checkBoxArr) {
 					prodNum = Integer.parseInt(i);
-					heart.setProd_num(prodNum);
-					myPageDao.heartProdDelete(heart); 
+					//2023-05-03 WED 출력 안됨
+					HeartBean record = myPageDao.getMyHeart(String.valueOf(member.getNum()));
+					System.out.println(record.getProd_num());
+					//bean.setProd_num(String.valueOf(prodNum));
+					//myPageDao.heartProdDelete(bean); 
 				}
 				row = 1;
 
