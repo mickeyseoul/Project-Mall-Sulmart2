@@ -77,15 +77,38 @@ public class MypageReviewController {
 
 				int row = 0;
 				int prodNum = 0;
+				
+				HeartBean record = myPageDao.getMyHeart(String.valueOf(member.getNum()));
+				System.out.println(record.getProd_num());
+				
+				String originHeart = record.getProd_num();
+				String[] originHeartArr = originHeart.split(" ");
+				List<String> originHeartList = new ArrayList<String>();
+				for(String i : originHeartArr) {
+					originHeartList.add(i);
+				}
+				
 
 				for (String i : checkBoxArr) {
-					prodNum = Integer.parseInt(i);
-					//2023-05-03 WED 출력 안됨
-					HeartBean record = myPageDao.getMyHeart(String.valueOf(member.getNum()));
-					System.out.println(record.getProd_num());
-					//bean.setProd_num(String.valueOf(prodNum));
-					//myPageDao.heartProdDelete(bean); 
+					for(String j : originHeartList) {
+						if(i.equals(j)) {
+							originHeartList.remove(i);
+							break;
+						}
+					}
 				}
+				
+				String newHeart = "";
+				for(String i : originHeartList) {
+					newHeart += i+" ";
+				}
+				
+				System.out.println(newHeart);
+				
+				bean.setProd_num(newHeart);
+				myPageDao.heartProdDelete(bean); 
+				
+				
 				row = 1;
 
 				if (row < 0) {

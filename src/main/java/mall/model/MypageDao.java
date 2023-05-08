@@ -49,8 +49,8 @@ public class MypageDao {
 	}
 	
 	public int heartProdDelete(HeartBean heart) {
-		System.out.println("삭제 메서드 실행 ----");
-		System.out.println(heart);
-		return sqlSessionTemplate.delete(namespace + ".heartProdDelete", heart);
+		//System.out.println("삭제 메서드 실행 ----");
+		//System.out.println(heart.getProd_num());
+		return sqlSessionTemplate.delete(namespace + ".HeartProdDelete", heart);
 	}
 }

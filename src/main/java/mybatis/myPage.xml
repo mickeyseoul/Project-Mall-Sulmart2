@@ -7,6 +7,10 @@
 	<select id="GetMyHeart" resultType="alcohol.model.HeartBean">
 		select * from heart where mem_num = #{mem_num}
 	</select>
+	
+	<update id="HeartProdDelete">
+		update heart set prod_num = #{prod_num} where mem_num = #{mem_num}
+	</update>
 
 	<select id="myHeartList" resultType="MyHeartList"
 		parameterType="int">

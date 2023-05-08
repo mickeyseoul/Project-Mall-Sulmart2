@@ -68,6 +68,48 @@
 
 
 <script>
+$(document).ready(function(){
+	//alert(1);
+	$("#allCheck").click(function(){
+		//alert(2);
+		if($("#allCheck").is(":checked"))
+			$("input[name=heartCheck]").prop("checked",true);
+		else
+			$("input[name=heartCheck]").prop("checked",false);
+		
+	});
+	
+});
+
+
+function singleProductDeleteClick(event) {
+	let targetSingleProduct = [$(event).data("id")]; //[] 안쓰면 에러
+	//alert(targetSingleProduct);
+	
+	$.ajax({
+		type : 'POST',
+		url : "/ex/prodDelete.mall",
+		data : {
+			checkBoxArr :targetSingleProduct
+		},
+		success : function(result) {
+			if (result.msg !== '') {
+				alert(result.msg);
+			}
+
+			if (result.status == '1') {
+				location.href = '/ex/myPageReview.mall';
+			}
+
+		}
+	})
+	
+	
+}
+
+
+
+/*
 	$(document).ready(function() {
 		$("#allCheck").click(function() {
 			if ($("#allCheck").is(":checked"))
@@ -141,5 +183,6 @@
 			}
 		})
 	}
+	*/
 </script>
 
